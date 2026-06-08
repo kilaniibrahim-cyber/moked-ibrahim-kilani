@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת זכויות עובדים בחירום - עו"ד אבראהים כילאני</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #d69e2e;
+            --bg-color: #f7fafc;
+            --text-color: #2d3748;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary-color);
+        }
+
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header p { margin: 5px 0 0 0; font-size: 1.05rem; color: #e2e8f0; }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 10px;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            color: #4a5568;
+            align-items: center;
+            background: #edf2f7;
+            padding: 10px 15px;
+            border-radius: 6px;
+        }
+
+        .breadcrumb span { cursor: pointer; color: var(--primary-color); font-weight: bold; }
+        .breadcrumb span:hover { text-decoration: underline; }
+        .breadcrumb .active { color: #718096; cursor: default; font-weight: normal; }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary-color);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .card h3 { margin: 0 0 10px 0; font-size: 1.3rem; color: var(--primary-color); }
+        .card p { margin: 0; color: #718096; font-size: 0.95rem; line-height: 1.4; }
+
+        .qa-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .qa-section h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 10px;
+        }
+
+        .qa-item {
+            border-bottom: 1px solid #edf2f7;
+            padding: 15px 0;
+        }
+
+        .qa-question {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2c5282;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .qa-answer {
+            margin-top: 12px;
+            line-height: 1.6;
+            color: var(--text-color);
+            display: none;
+            padding-right: 15px;
+            border-right: 3px solid var(--secondary-color);
+            font-size: 1rem;
+        }
+
+        .guideline {
+            background-color: #fffaf0;
+            border: 1px solid #feebc8;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .footer-credit {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            border-top: 1px solid #e2e8f0;
+            color: #4a5568;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>מערכת ניווט זכויות עובדים בחירום ובמילואים</h1>
+        <p>מבוסס על החומרים המקצועיים באדיבות עו"ד אבראהים כילאני • ראש צוות ייעוץ משפטי ביחסי עבודה</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- פירורי לחם לניווט קל -->
+        <div class="breadcrumb" id="breadcrumb">
+            <span onclick="navigateTo('main')">נושאים ראשיים</span>
+            <div id="bc-separator1" style="display:none;"> &gt; </div>
+            <span id="bc-parent" style="display:none;" onclick="goBackToSub()"></span>
+            <div id="bc-separator2" style="display:none;"> &gt; </div>
+            <span id="bc-child" class="active" style="display:none;"></span>
+        </div>
+
+        <!-- דף 1: נושאים ראשיים -->
+        <div id="page-main" class="page active">
+            <div class="grid">
+                <div class="card" onclick="openTopic('miluim')">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>שירות מילואים ובני זוג</h3>
+                    <p>הגנה מפיטורים (30 ו-60 יום), תגמולים, איסור פגיעה במשרה, וזכויות מיוחדות לבני הזוג.</p>
+                </div>
+                <div class="card" onclick="openTopic('emergency')">
+                    <i class="fas fa-bullhorn"></i>
+                    <h3>חוק הגנה בשעת חירום</h3>
+                    <p>איסור פיטורים עקב הנחיות פיקוד העורף, סגירת מוסדות חינוך, מפעלים חיוניים ועבודה מרחוק.</p>
+                </div>
+                <div class="card" onclick="openTopic('leves')">
+                    <i class="fas fa-calendar-minus"></i>
+                    <h3>חל"ת, חופשות ושינויי שכר</h3>
+                    <p>חופשה כפויה, הסכמת עובד לחל"ת, הגנות נשים, צבירת חופשה שנתית והרעת תנאים.</p>
+                </div>
+                <div class="card" onclick="openTopic('shaagat')">
+                    <i class="fas fa-clock"></i>
+                    <h3>מבצע "שאגת הארי" 2026</h3>
+                    <p>הסדרים מיוחדים בין 28.02.2026 ל-14.04.2026, אבטלה מקילה, בני 67+ ותוקף תיאום מס.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- דף 2: תתי נושאים -->
+        <div id="page-sub" class="page">
+            <div class="grid" id="sub-grid"></div>
+        </div>
+
+        <!-- דף 3: שאלות ותשובות מפורטות -->
+        <div id="page-content" class="page">
+            <div class="qa-section" id="qa-container"></div>
+        </div>
+
+        <div class="footer-credit">
+            כל הזכויות שמורות לשירות המוקדנים המשפטי – בהנחיית עו"ד אבראהים כילאני (2026)
+        </div>
+    </div>
+
+    <script>
+        // בסיס הנתונים המלא המשלב את כל 10 הקבצים והמקורות שסיפקת במדויק
+        const db = {
+            miluim: {
+                title: "שירות מילואים ובני זוג",
+                subs: {
+                    protection30: {
+                        title: "הגנה מפיטורים (תקופה של 30 יום)",
+                        items: [
+                            {
+                                q: "האם מותר לפטר עובד במהלך שירות מילואים או מיד לאחריו?",
+                                a: "אסור לפטר עובד בשל שירותו במילואים, קריאתו לשירות או שירותו הצפוי[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span). כמו כן, חל איסור מוחלט לפטר עובד מכל סיבה שהיא במהלך השירות עצמו[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span). אם שירות המילואים עלה על יומיים רצופים, אסור לפטרו מכל סיבה שהיא במשך 30 ימים מתום השירות, אלא בהיתר מיוחד מוועדת התעסוקה במשרד הביטחון[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)."
+                            },
+                            {
+                                q: "כיצד משפיעים 30 הימים המוגנים על ימי ההודעה המוקדמת?",
+                                a: "במניין ימי ההודעה המוקדמת לפיטורים אין למנות את 30 הימים שלאחר תום שירות המילואים[span_7](start_span)[span_7](end_span). תקופת ההודעה המוקדמת יכולה להתחיל או להמשיך להיספר רק לאחר שחלפו לחלוטין 30 הימים המוגנים מסיום השירות[span_8](start_span)[span_8](end_span)."
+                            }
+                        ]
+                    },
+                    protection60: {
+                        title: "הגנה מורחבת (ימים 31 עד 60 והוראות ועדת פיקוח)",
+                        items: [
+                            {
+                                q: "מהם התנאים והזכויות להגנה המורחבת בימים 31 עד 60 שלאחר המילואים?",
+                                a: "על פי צווי ההרחבה, עובד שנעדר בשל שירות מילואים במשך 60 ימים מצטברים או יותר במהלך השנה הקלנדרית, ושירת לפחות 7 ימים רצופים, נהנה מהגנה מורחבת בימים 31 עד 60 שלאחר תום השירות[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span). בתקופה זו חל איסור לפטרו, להוציאו לחל\"ת או לפגוע בתנאי עבודתו, אלא אם התקבל אישור מראש מוועדת הפיקוח[span_11](start_span)[span_11](end_span)[span_12](start_span)[span_12](end_span)."
+                            },
+                            {
+                                q: "כיצד פועל מנגנון הבקשה וההחלטה של ועדת הפיקוח במשרד העבודה?",
+                                a: "מעסיק המבקש לפטר או להוציא לחל\"ת עובד המוגן בימים 31–60 מחויב לפנות לוועדת הפיקוח במשרד העבודה (במייל VaadatPikuachMiluim@labor.gov.il)[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span). הפיטורים או החל\"ת מעוכבים אוטומטית ואינם נכנסים לתוקף עד להכרעת הוועדה, שמחויבת לפנות לעובד לקבלת תגובתו ולתת החלטה תוך 14 יום[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)."
+                            }
+                        ]
+                    },
+                    terms_change: {
+                        title: "איסור פגיעה בהיקף משרה או הכנסה",
+                        items: [
+                            {
+                                q: "האם מותר למעסיק לצמצם משרה או להפחית שכר לעובד שחזר ממילואים?",
+                                a: "חל איסור על מעסיק לפגוע בהיקף המשרה או בהכנסה של עובד בתקופת המילואים ובמשך 30 יום לאחריו, אלא בהיתר מוועדת התעסוקה[span_17](start_span)[span_17](end_span)[span_18](start_span)[span_18](end_span). כמו כן, למי שזכאי להגנת צו ההרחבה (60 ימי מילואים מצטברים), חל איסור לפגוע בתנאי עבודתו (כולל ניוד תפקיד או שינוי מטלות) גם בימים 31 עד 60 מתום השירות, אלא באישור ועדת הפיקוח[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)."
+                            }
+                        ]
+                    },
+                    partners_rights: {
+                        title: "הגנות וזכויות לבני זוג של משרתי מילואים",
+                        items: [
+                            {
+                                q: "האם מותר לפטר או להוציא לחל\"ת בן/בת זוג של משרת מילואים?",
+                                a: "חוק חיילים משוחררים (תיקון 19) וצווי ההרחבה קובעים כי אסור לפטר או להוציא לחל\"ת עובד/ת שיש להם ילד משותף מתחת לגיל 14 (או עד גיל 21 עם צרכים מיוחדים) בתקופת שירות המילואים של בן הזוג, אם השירות הוא בצו 8 או נמשך לפחות 21 ימים רצופים, אלא בהיתר מוועדת התעסוקה[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span). הגנת הפיטורים הכללית חלה גם על הורי אומנה ושותפים להורות[span_23](start_span)[span_23](end_span)[span_24](start_span)[span_24](end_span)."
+                            },
+                            {
+                                q: "מהם ימי ההיעדרות בתשלום המגיעים לבני זוג לפי הטבלה המעודכנת לשנת 2026?",
+                                a: "בן זוג של משרת מילואים (עם ילד מתחת לגיל 14 או נסיבות רפואיות/מוגבלות של קרוב) זכאי לימי היעדרות בתשלום מלא ע\"ח המעסיק לפי מכסה שנתית מצטברת[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span):<br>• עד 30 ימי מילואים של בן הזוג: 0 ימי היעדרות[span_27](start_span)[span_27](end_span)[span_28](start_span)[span_28](end_span).<br>• 31 עד 60 ימי מילואים: 2 ימי היעדרות[span_29](start_span)[span_29](end_span)[span_30](start_span)[span_30](end_span).<br>• 61 עד 90 ימי מילואים: 4 ימי היעדרות[span_31](start_span)[span_31](end_span)[span_32](start_span)[span_32](end_span).<br>• 91 עד 120 ימי מילואים: 6 ימי היעדרות[span_33](start_span)[span_33](end_span)[span_34](start_span)[span_34](end_span).<br>• 121 ימי מילואים ומעלה: 8 ימי היעדרות[span_35](start_span)[span_35](end_span)[span_36](start_span)[span_36](end_span).<br>הימים ניתנים לניצול גם כחלקים משעות[span_37](start_span)[span_37](end_span)[span_38](start_span)[span_38](end_span)."
+                            }
+                        ]
+                    },
+                    employer_refunds: {
+                        title: "תגמולים והחזרי מעסיקים (הפרשות סוציאליות)",
+                        items: [
+                            {
+                                q: "כיצד מקבל המעסיק החזר על השכר וההפרשות הסוציאליות ששילם לעובד במילואים?",
+                                a: "המעסיק משלם לעובד את שכרו הרגיל ומגיש בקשה להחזר חודשי שוטף מול הביטוח הלאומי[span_39](start_span)[span_39](end_span). בנוסף, מעסיקים ששילמו הפרשות סוציאליות (פנסיה, קופות גמל, קרן השתלמות) בתקופת המילואים, זכאים לפיצוי נוסף מהביטוח הלאומי בגובה 20% משכרו היומי הממוצע של העובד כפול ימי המילואים שביצע[span_40](start_span)[span_40](end_span)."
+                            }
+                        ]
+                    }
+                }
+            },
+            emergency: {
+                title: "חוק הגנה בשעת חירום",
+                subs: {
+                    oref_orders: {
+                        title: "איסור פיטורים והנחיות פיקוד העורף",
+                        items: [
+                            {
+                                q: "האם מותר לפטר עובד שנעדר מעבודתו עקב הנחיות ביטחוניות?",
+                                a: "חל איסור מוחלט לפטר עובד בשל היעדרותו או אי-ביצוע עבודתו מחמת הוראה שניתנה בשעת התקפה או במצב מיוחד בעורף אשר מנעה ממנו להתייצב[span_41](start_span)[span_41](end_span)[span_42](start_span)[span_42](end_span). האיסור חל גם אם פיקוד העורף מתנה הגעה בקיום מרחב מוגן תקני ומרחב כזה אינו קיים במקום העבודה[span_43](start_span)[span_43](end_span)."
+                            },
+                            {
+                                q: "האם עובד שנעדר בשל פחד או חרדה מוגן מפיטורים?",
+                                a: "אם מקום העבודה ממוגן ומאושר לפעילות על פי פיקוד העורף, והעובד נעדר רק בשל פחד, הוא אינו מוגן מפיטורים מכוח חוק הגנה בחירום[span_44](start_span)[span_44](end_span). עם זאת, עובד שנעדר בשל חרדה או מצב נפשי המגובה באישור רפואי זכאי לתשלום דמי מחלה, ובתקופה זו חל איסור לפטרו[span_45](start_span)[span_45](end_span)."
+                            }
+                        ]
+                    },
+                    school_closure: {
+                        title: "סגירת מוסדות חינוך והשגחה על ילדים",
+                        items: [
+                            {
+                                q: "מהם התנאים המדויקים המגינים על הורה מפני פיטורים עקב סגירת מוסד חינוך?",
+                                a: "אסור לפטר עובד שנעדר לצורך השגחה על ילדו (עד גיל 14, או עד גיל 21 עם צרכים מיוחדים) עקב סגירת מוסד החינוך בהוראת פיקוד העורף או הרשות המקומית, ובלבד שהתקיים אחד מאלה[span_46](start_span)[span_46](end_span)[span_47](start_span)[span_47](end_span):<br>1. הילד בהחזקתו הבלעדית או שהעובד הורה עצמאי[span_48](start_span)[span_48](end_span)[span_49](start_span)[span_49](end_span).<br>2. בן הזוג עובד ולא נעדר לצורך ההשגחה, או שנבצר ממנו להשגיח[span_50](start_span)[span_50](end_span)[span_51](start_span)[span_51](end_span).<br>ההגנה לא תחול אם קיים במקום העבודה של אחד ההורים סידור הולם להשגחה[span_52](start_span)[span_52](end_span)[span_53](start_span)[span_53](end_span)."
+                            }
+                        ]
+                    },
+                    essential_plants: {
+                        title: "מפעלים חיוניים וחובת התייצבות",
+                        items: [
+                            {
+                                q: "האם עובד במפעל חיוני שקיבל צו קריאה רשאי להיעדר מהעבודה?",
+                                a: "לא. מי שהוצא לו צו קריאה לשירות עבודה במפעל חיוני או מפעל למתן שירותים קיומיים חייב להתייצב לעבודה (פיזית או מרחוק לפי קביעת המעסיק)[span_54](start_span)[span_54](end_span)[span_55](start_span)[span_55](end_span). אי-התייצבות מהווה עבירה פלילית, וחובת ההתייצבות חלה גם על הורה יחיד לילד מתחת לגיל 14[span_56](start_span)[span_56](end_span)[span_57](start_span)[span_57](end_span). חובת ההתייצבות אינה חלה על נשים בהיריון או פחות משנה לאחר לידה, שוטרים, חיילים ומי שטרם מלאו לו 16 או הגיע לגיל פרישה[span_58](start_span)[span_58](end_span)[span_59](start_span)[span_59](end_span)."
+                            }
+                        ]
+                    },
+                    remote_work: {
+                        title: "עבודה מרחוק (מהבית) בחירום",
+                        items: [
+                            {
+                                q: "האם מעסיק יכול לחייב עובד לעבוד מהבית בתקופת חירום?",
+                                a: "המעסיק רשאי, לפי שיקול דעתו ובתום לב, לאשר עבודה מרחוק[span_60](start_span)[span_60](end_span)[span_61](start_span)[span_61](end_span). עם זאת, אם מקום העבודה סגור והעובד זכאי להיעדרות מוגנת (למשל לצורך השגחה על ילדים או מחמת הוראות פיקוד העורף), המעסיק אינו יכול לחייב עבודה מהבית שכן החוק מקנה הגנה מלאה מפיטורים גם על אי-ביצוע עבודה[span_62](start_span)[span_62](end_span)[span_63](start_span)[span_63](end_span)."
+                            }
+                        ]
+                    }
+                }
+            },
+            leves: {
+                title: "חל\"ת, חופשות ושינויי שכר",
+                subs: {
+                    halat_rules: {
+                        title: "הוצאה לחל\"ת והסכמת העובד",
+                        items: [
+                            {
+                                q: "האם מותר למעסיק להוציא עובד לחל\"ת ללא הסכמתו?",
+                                a: "מעסיק רשאי להוציא עובד לחל\"ת אך ורק בהסכמתו המפורשת של העובד[span_64](start_span)[span_64](end_span)[span_65](start_span)[span_65](end_span). הוצאת עובד לחל\"ת כפוי לזמן ארוך ובלתי מוגבל מהווה הרעה מוחשית בתנאי העבודה ויכולה להיחשב כפיטורים, המזכים את העובד בפיצויי פיטורים מלאים ובחובת עריכת שימוע כדין[span_66](start_span)[span_66](end_span)."
+                            }
+                        ]
+                    },
+                    women_protection: {
+                        title: "היתרי משרד העבודה (נשים בהיריון וטיפולי פוריות)",
+                        items: [
+                            {
+                                q: "מתי מעסיק חייב לבקש היתר מיוחד ממשרד העבודה כדי להוציא עובד לחל\"ת או להפחית שכר?",
+                                a: "בימי שגרה ובחירום, חובה לקבל היתר מראש מהממונה על עבודת נשים במשרד העבודה עבור קבוצות מוגנות במקרים הבאים[span_67](start_span)[span_67](end_span):<br>• עובדת בהיריון בעלת ותק של 6 חודשים ומעלה במקום העבודה[span_68](start_span)[span_68](end_span).<br>• עובדת שחזרה מחופשת לידה או מחל\"ת שאחרי לידה וטרם חלפו 60 ימים מחזרתה[span_69](start_span)[span_69](end_span).<br>• עובד/ת הנמצאים במהלך טיפולי פוריות (במגבלות הימים הקבועות בחוק)[span_70](start_span)[span_70](end_span).<br>• עובדת שהתגוררה במקלט לנשים נפגעות אלימות וטרם חלפו 150 ימים מחזרתה[span_71](start_span)[span_71](end_span)."
+                            }
+                        ]
+                    },
+                    vacation_forced: {
+                        title: "חופשה כפויה וצבירת ימי חופשה",
+                        items: [
+                            {
+                                q: "האם מותר למעסיק להוציא עובדים לחופשה שנתית כפויה בשל המצב?",
+                                a: "מעסיק רשאי להוציא עובדים לחופשה כפויה על חשבון ימי החופשה הצבורים שלהם, ובלבד שיש להם ימי חופשה ביתרה[span_72](start_span)[span_72](end_span). המעסיק אינו רשאי להכניס עובד ליתרת חופשה שלילית ללא הסכמתו המפורשת[span_73](start_span)[span_73](end_span)[span_74](start_span)[span_74](end_span). אם אורך החופשה הרצופה הוא 7 ימים או יותר, על המעסיק להודיע לעובד שבועיים מראש[span_75](start_span)[span_75](end_span)[span_76](start_span)[span_76](end_span)."
+                            }
+                        ]
+                    }
+                }
+            },
+            shaagat: {
+                title: "מבצע \"שאגת הארי\" 2026",
+                subs: {
+                    shaagat_halat: {
+                        title: "הקלות חל\"ת ודמי אבטלה במבצע",
+                        items: [
+                            {
+                                q: "מהם תנאי הזכאות המקלים לדמי אבטלה שנקבעו במבצע שאגת הארי 2026?",
+                                a: "במהלך מבצע שאגת הארי, נקבע הסדר מקל מיוחד: עובדים שהוצאו לחל\"ת של לפחות 10 ימים בין התאריכים 28.02.2026 ל-14.04.2026 זכאים לדמי אבטלה אם עבדו לפחות 6 חודשים מתוך 18 החודשים האחרונים (במקום 12 חודשים בשגרה)[span_77](start_span)[span_77](end_span). דמי האבטלה ישולמו מהיום הראשון ללא ניכוי ימי חופשה צבורים וללא חובת התייצבות פיזית בלשכות[span_78](start_span)[span_78](end_span)."
+                            },
+                            {
+                                q: "מהו הדין המיוחד למי שהוצא לחל\"ת ביומיים הראשונים של המבצע?",
+                                a: "עובד שהוצא לחל\"ת במהלך היומיים הראשונים של מבצע שאגת הארי (החל מ-28.02.2026) עשוי להיות זכאי לדמי אבטלה גם אם משך החל\"ת שלו היה קצר ועמד על 5 ימים בלבד (במקום מינימום 10 ימים)[span_79](start_span)[span_79](end_span)."
+                            }
+                        ]
+                    },
+                    shaagat_special: {
+                        title: "מענקי גיל 67+, תיאום מס ושעות נוספות",
+                        items: [
+                            {
+                                q: "מה הדין לגבי עובדים בני 67 ומעלה שיצאו לחל\"ת במבצע שאגת הארי?",
+                                a: "עובדים בני 67 ומעלה, אשר אינם זכאים לדמי אבטלה רגילים מפאת גילם, והוצאו לחל\"ת או פוטרו במהלך המבצע (בין 28.02.2026 ל-14.04.2026), עשויים להיות זכאים למענק כספי מיוחד מהביטוח הלאומי[span_80](start_span)[span_80](end_span)."
+                            },
+                            {
+                                q: "עובד לא הספיק לבצע תיאום מס לשנת 2026, האם יחויב במס מוגדל?",
+                                a: "לא. בשל מצב החירום, רשות המסים קבעה כי תיאומי מס שהופקו עבור שנת 2025 יעמדו בתוקף מוארך עד ליום 13.05.2026[span_81](start_span)[span_81](end_span). בתלושי המשכורת של חודשים ינואר עד אפריל 2026 כולל, המס ינוכה לפי תיאום המס של 2025 ואין צורך לבצע תיאום חדש כדי למנוע חיוב יתר[span_82](start_span)[span_82](end_span)."
+                            },
+                            {
+                                q: "מהן המכסות המותרות להעסקת עובדים בשעות נוספות במהלך המבצע?",
+                                a: "בתקופת המבצע (מ-02.03.2026 עד 14.04.2026) הותר להעסיק עובדים קיימים בשעות נוספות מוגברות תחת תנאים קשיחים[span_83](start_span)[span_83](end_span): מכסת השעות הנוספות לא תעלה על 25 שעות שבועיות (עד 67 שעות עבודה שבועיות כולל נוספות), ולא יותר מ-90 שעות נוספות בחודש[span_84](start_span)[span_84](end_span). ניתן להעסיק עד 14 שעות ביום בהסכמת העובד ומתן הפסקה נוספת של רבע שעה לפחות בין השעה ה-12 לשעה ה-14[span_85](start_span)[span_85](end_span)."
+                            }
+                        ]
+                    }
+                }
+            }
+        };
+
+        let currentTopicId = '';
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${pageId}`).classList.add('active');
+            
+            if (pageId === 'main') {
+                document.getElementById('bc-separator1').style.display = 'none';
+                document.getElementById('bc-parent').style.display = 'none';
+                document.getElementById('bc-separator2').style.display = 'none';
+                document.getElementById('bc-child').style.display = 'none';
+            }
+        }
+
+        function openTopic(topicId) {
+            currentTopicId = topicId;
+            const topic = db[topicId];
+            const subGrid = document.getElementById('sub-grid');
+            subGrid.innerHTML = '';
+
+            document.getElementById('bc-separator1').style.display = 'block';
+            const bcParent = document.getElementById('bc-parent');
+            bcParent.style.display = 'block';
+            bcParent.innerText = topic.title;
+            document.getElementById('bc-separator2').style.display = 'none';
+            document.getElementById('bc-child').style.display = 'none';
+
+            for (const [subId, subData] of Object.entries(topic.subs)) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openSubTopic(subId, subData);
+                card.innerHTML = `
+                    <i class="fas fa-folder-open"></i>
+                    <h3>${subData.title}</h3>
+                    <p>לחץ לצפייה בשאלות ותשובות מונחות למוקדן...</p>
+                `;
+                subGrid.appendChild(card);
+            }
+
+            navigateTo('sub');
+        }
+
+        function goBackToSub() {
+            if (currentTopicId) openTopic(currentTopicId);
+        }
+
+        function openSubTopic(subId, subData) {
+            document.getElementById('bc-separator2').style.display = 'block';
+            const bcChild = document.getElementById('bc-child');
+            bcChild.style.display = 'block';
+            bcChild.innerText = subData.title;
+
+            const qaContainer = document.getElementById('qa-container');
+            qaContainer.innerHTML = `<h2>${subData.title} - מדריך מענה לפונים</h2>`;
+
+            subData.items.forEach(item => {
+                const qaItem = document.createElement('div');
+                qaItem.className = 'qa-item';
+                
+                const question = document.createElement('div');
+                question.className = 'qa-question';
+                question.innerHTML = `<span><i class="far fa-question-circle" style="margin-left:8px;color:var(--primary-color);"></i>${item.q}</span> <i class="fas fa-chevron-down"></i>`;
+                
+                const answer = document.createElement('div');
+                answer.className = 'qa-answer';
+                answer.innerHTML = `
+                    <p>${item.a}</p>
+                    <div class="guideline">
+                        <i class="fas fa-gavel" style="color:var(--secondary-color);margin-left:5px;"></i>
+                        <strong>הנחיית המוקדן המשפטית:</strong> נוסח זה מאושר להקראה ושימוש מיידי מול הפונה באדיבות עו"ד אבראהים כילאני.
+                    </div>
+                `;
+
+                question.onclick = () => {
+                    const isVisible = answer.style.display === 'block';
+                    answer.style.display = isVisible ? 'none' : 'block';
+                    question.querySelector('.fa-chevron-down, .fa-chevron-up').className = isVisible ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+                };
+
+                qaItem.appendChild(question);
+                qaItem.appendChild(answer);
+                qaContainer.appendChild(qaItem);
+            });
+
+            navigateTo('content');
+        }
+    </script>
+</body>
+</html>
