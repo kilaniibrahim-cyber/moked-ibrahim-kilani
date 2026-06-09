@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת זכויות עובדים בחירום-  היחידה ליחסי עבודה - עו"ד אבראהים כילאני</title>
+    <title>מערכת זכויות עובדים בחירום - היחידה ליחסי עבודה - עו"ד אבראהים כילאני</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -12,6 +12,7 @@
             --bg-color: #f7fafc;
             --text-color: #2d3748;
             --card-bg: #ffffff;
+            --success-color: #2f855a;
         }
 
         body {
@@ -39,28 +40,97 @@
             padding: 0 20px;
         }
 
+        .navigation-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
         .breadcrumb {
             display: flex;
             gap: 10px;
             font-size: 1rem;
-            margin-bottom: 25px;
             color: #4a5568;
             align-items: center;
             background: #edf2f7;
             padding: 10px 15px;
             border-radius: 6px;
+            flex-grow: 1;
         }
 
         .breadcrumb span { cursor: pointer; color: var(--primary-color); font-weight: bold; }
         .breadcrumb span:hover { text-decoration: underline; }
         .breadcrumb .active { color: #718096; cursor: default; font-weight: normal; }
 
+        .back-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .back-btn:hover {
+            background-color: #2c5282;
+        }
+
+        /* שורת חיפוש פנימית */
+        .search-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .search-input-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50px;
+            transform: translateY(-50%);
+            color: #a0aec0;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1.05rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--primary-color);
+        }
+
         .page { display: none; }
         .page.active { display: block; }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
         }
 
@@ -92,6 +162,7 @@
         .card h3 { margin: 0 0 10px 0; font-size: 1.3rem; color: var(--primary-color); }
         .card p { margin: 0; color: #718096; font-size: 0.95rem; line-height: 1.4; }
 
+        /* אזור שאלות ותשובות */
         .qa-section {
             background: white;
             padding: 30px;
@@ -99,12 +170,40 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        .qa-section h2 {
-            margin-top: 0;
-            color: var(--primary-color);
+        .qa-header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 2px solid #edf2f7;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
+
+        .qa-section h2 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .controls-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            background: #edf2f7;
+            border: none;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #4a5568;
+            transition: background 0.2s;
+        }
+
+        .control-btn:hover { background: #e2e8f0; }
 
         .qa-item {
             border-bottom: 1px solid #edf2f7;
@@ -129,6 +228,7 @@
             padding-right: 15px;
             border-right: 3px solid var(--secondary-color);
             font-size: 1rem;
+            position: relative;
         }
 
         .guideline {
@@ -140,6 +240,37 @@
             font-size: 0.9rem;
         }
 
+        .action-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .copy-btn {
+            background-color: #f7fafc;
+            border: 1px solid #cbd5e0;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #4a5568;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: #edf2f7;
+            color: var(--primary-color);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
         .footer-credit {
             text-align: center;
             margin-top: 50px;
@@ -147,7 +278,7 @@
             border-top: 1px solid #e2e8f0;
             color: #4a5568;
             font-size: 0.95rem;
-            font-weight: bold;
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -159,17 +290,28 @@
     </header>
 
     <div class="container">
-        
-        <!-- פירורי לחם לניווט קל -->
-        <div class="breadcrumb" id="breadcrumb">
-            <span onclick="navigateTo('main')">נושאים ראשיים</span>
-            <div id="bc-separator1" style="display:none;"> &gt; </div>
-            <span id="bc-parent" style="display:none;" onclick="goBackToSub()"></span>
-            <div id="bc-separator2" style="display:none;"> &gt; </div>
-            <span id="bc-child" class="active" style="display:none;"></span>
+       
+        <div class="navigation-wrapper">
+            <div class="breadcrumb" id="breadcrumb">
+                <span onclick="navigateTo('main')">נושאים ראשיים</span>
+                <div id="bc-separator1" style="display:none;"> &gt; </div>
+                <span id="bc-parent" style="display:none;" onclick="goBackToSub()"></span>
+                <div id="bc-separator2" style="display:none;"> &gt; </div>
+                <span id="bc-child" class="active" style="display:none;"></span>
+            </div>
+            
+            <button id="global-back-btn" class="back-btn" style="display: none;" onclick="handleBackNavigation()">
+                <i class="fas fa-arrow-right"></i> חזור למסך הקודם
+            </button>
         </div>
 
-        <!-- דף 1: נושאים ראשיים -->
+        <div id="search-section" class="search-container">
+            <div class="search-input-wrapper">
+                <input type="text" id="main-search" class="search-box" placeholder="חפש שאלה, מילת מפתח או זכות משפטית (לדוגמה: הגנה מפיטורים, חל''ת, 2026)..." oninput="executeSearch()">
+                <i class="fas fa-search" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0;"></i>
+            </div>
+        </div>
+
         <div id="page-main" class="page active">
             <div class="grid">
                 <div class="card" onclick="openTopic('miluim')">
@@ -195,23 +337,30 @@
             </div>
         </div>
 
-        <!-- דף 2: תתי נושאים -->
         <div id="page-sub" class="page">
             <div class="grid" id="sub-grid"></div>
         </div>
 
-        <!-- דף 3: שאלות ותשובות מפורטות -->
         <div id="page-content" class="page">
-            <div class="qa-section" id="qa-container"></div>
+            <div class="qa-section">
+                <div class="qa-header-area">
+                    <h2 id="qa-title">מדריך מענה לפונים</h2>
+                    <div class="controls-btns" id="qa-controls">
+                        <button class="control-btn" onclick="toggleAllAnswers(true)"><i class="fas fa-expand-alt"></i> פתח הכל</button>
+                        <button class="control-btn" onclick="toggleAllAnswers(false)"><i class="fas fa-compress-alt"></i> סגור הכל</button>
+                    </div>
+                </div>
+                <div id="qa-container"></div>
+            </div>
         </div>
 
         <div class="footer-credit">
-             כל הזכויות שמורות ליחידה ליחסי עבודה (2026) - יש טעות אנא פנו לעו"ד אבראהים כילאני
+             כל הזכויות שמורות לעו"ד אבראהים כילאני - היחידה ליחסי עבודה (2026) • יש טעות אנא פנו לעו"ד אבראהים כילאני<br>
+             <span style="font-size: 0.85rem; color: #a0aec0; font-weight: normal;">גרסת מערכת: 1.5 • עודכן לאחרונה: יוני 2026 • מיועד לשימוש פנימי בלבד</span>
         </div>
     </div>
 
     <script>
-        // בסיס הנתונים המלא המשלב את כל 10 הקבצים והמקורות שסיפקת במדויק
         const db = {
             miluim: {
                 title: "שירות מילואים ובני זוג",
@@ -260,15 +409,14 @@
                             },
                             {
                                 q: "מהם ימי ההיעדרות בתשלום המגיעים לבני זוג לפי הטבלה המעודכנת לשנת 2026?",
-                                a: "בן זוג של משרת מילואים (עם ילד מתחת לגיל 14 או נסיבות רפואיות/מוגבלות של קרוב) זכאי לימי היעדרות בתשלום מלא ע\"ח המעסיק לפי מכסה שנתית מצטברת:<br>• עד 30 ימי מילואים של בן הזוג: 0 ימי היעדרות.<br>• 31 עד 60 ימי מילואים: 2 ימי היעדרות.<br>• 61 עד 90 ימי מילואים: 4 ימי היעדרות.<br>• 91 עד 120 ימי מילואים: 6 ימי היעדרות.<br>• 121 ימי מילואים ומעלה: 8 ימי היעדרות.<br>הימים ניתנים לניצול גם כחלקים משעות.<br>• <br><br><strong>נסיבות הניצול המאושרות (בכפוף לאישורים מתאימים):</strong><br>1. מחלת ילד עד גיל 14.<br>2. טיפול או השגחה בלעדית בקרוב שהוא אדם עם מוגבלות.<br>3. מחלת ילד עד גיל 18 החולה במחלה ממארת או מטופל בדיאליזה.<br>4. טיפול בהורה חולה.<br>5. הארכת תקופת הלידה וההורות של בן הזוג.<br>6. השגחה וטיפול בילד.<br>7. היעדרות הנדרשת עקב היציאה לשירות לצורך סידורים הכרחיים לניהול ותחזוקת משק הבית שניתן לבצעם רק בשעות העבודה (תוך התחשבות בצורכי העבודה)."
+                                a: "בן זוג של משרת מילואים (עם ילד מתחת לגיל 14 או נסיבות רפואיות/מוגבלות של קרוב) זכאי לימי היעדרות בתשלום מלא ע\"ח המעסיק לפי מכסה שנתית מצטברת:<br>• עד 30 ימי מילואים של בן הזוג: 0 ימי היעדרות.<br>• 31 עד 60 ימי מילואים: 2 ימי היעדרות.<br>• 61 עד 90 ימי מילואים: 4 ימי היעדרות.<br>• 91 עד 120 ימי מילואים: 6 ימי היעדרות.<br>• 121 ימי מילואים ומעלה: 8 ימי היעדרות.<br>הימים ניתנים לניצול גם כחלקים משעות.<br><br><strong>נסיבות הניצול המאושרות (בכפוף לאישורים מתאימים):</strong><br>1. מחלת ילד עד גיל 14.<br>2. טיפול או השגחה בלעדית בקרוב שהוא אדם עם מוגבלות.<br>3. מחלת ילד עד גיל 18 החולה במחלה ממארת או מטופל בדיאליזה.<br>4. טיפול בהורה חולה.<br>5. הארכת תקופת הלידה וההורות של בן הזוג.<br>6. השגחה וטיפול בילד.<br>7. היעדרות הנדרשת עקב היציאה לשירות לצורך סידורים הכרחיים לניהול ותחזוקת משק הבית שניתן לבצעם רק בשעות העבודה (תוך התחשבות בצורכי העבודה)."
                             },
                             {
                                 q: "האם ימי ההיעדרות ניתנים לצבירה או פדיון וכיצד מחושב רצף מילואים בין שנים קלנדריות?",
                                 a: "הימים ניתנים למימוש **רק בעת שירות מילואים פעיל של בן הזוג** ובאופן חלקי כשעות היעדרות מצטברות. הזכות אינה נצברת מעבר ל-31.12 של אותה שנה ואינה ניתנת לפדיון.<br><br><strong>חריג רצף שנים:</strong> הזכות תישמר ותעבור אם מתקיים רצף בימי מילואים שהחלו בשנה הקודמת ונמשכים ברצף אל השנה הנוכחית. 'ברצף' לעניין זה כולל תקופת שירות מילואים פעיל בהתרעננות, וכן הפסקות של עד 5 ימים בין שירות לשמשנהו. לעניין ימי מילואים מצטברים שבין 31 ל-60 יום, התנאי הוא שימי המילואים שיבואו במניין יהיו 5 ימים רצופים לפחות."
                             }
                         ]
-                    },"
-                           
+                    },
                     employer_refunds: {
                         title: "תגמולים והחזרי מעסיקים (הפרשות סוציאליות)",
                         items: [
@@ -322,15 +470,13 @@
                                 a: "המעסיק רשאי, לפי שיקול דעתו ובתום לב, לאשר עבודה מרחוק. עם זאת, אם מקום העבודה סגור והעובד זכאי להיעדרות מוגנת (למשל לצורך השגחה על ילדים או מחמת הוראות פיקוד העורף), המעסיק אינו יכול לחייב עבודה מהבית שכן החוק מקנה הגנה מלאה מפיטורים גם על אי-ביצוע עבודה."
                             }
                         ]
-                    }
-                }
-            },
-                  remote_work: {
+                    },
+                    unprotected_workers: {
                         title: "מי לא זכאי להגנה מפיטורים לפי חוק הגנה על עובדים בשעת חירום",
                         items: [
                             {
                                 q: "רשימת בעלי תפקידים שחוק הגנה על עובדים בשעת חירום לא חל עליהם",
-                                a: "(1) מי שנקרא לשירות עבודה לפי חוק שירות עבודה בשעת-חירום, התשכ"ז-1967; (2) שוטר ; (3) סוהר; (4) עובד שירות הביטחון הכללי; (5) עובד המוסד למודיעין ולתפקידים מיוחדים; (6) חבר ארגון עזר כהגדרתו בחוק ההתגוננות האזרחית; (7) עובד בגוף הצלה כהגדרתו בסעיף 90א לפקודת המשטרה.."
+                                a: "(1) מי שנקרא לשירות עבודה לפי חוק שירות עבודה בשעת-חירום, התשכ\"ז-1967; (2) שוטר ; (3) סוהר; (4) עובד שירות הביטחון הכללי; (5) עובד המוסד למודיעין ולתפקידים מיוחדים; (6) חבר ארגון עזר כהגדרתו בחוק ההתגוננות האזרחית; (7) עובד בגוף הצלה כהגדרתו בסעיף 90א לפקודת המשטרה."
                             }
                         ]
                     }
@@ -406,16 +552,39 @@
         };
 
         let currentTopicId = '';
+        let currentPageId = 'main';
+        let isSearchMode = false;
 
         function navigateTo(pageId) {
+            currentPageId = pageId;
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(`page-${pageId}`).classList.add('active');
-            
+           
+            const backBtn = document.getElementById('global-back-btn');
+            const searchSection = document.getElementById('search-section');
+
             if (pageId === 'main') {
+                backBtn.style.display = 'none';
+                searchSection.style.display = 'flex';
                 document.getElementById('bc-separator1').style.display = 'none';
                 document.getElementById('bc-parent').style.display = 'none';
                 document.getElementById('bc-separator2').style.display = 'none';
                 document.getElementById('bc-child').style.display = 'none';
+                isSearchMode = false;
+            } else {
+                backBtn.style.display = 'inline-flex';
+                searchSection.style.display = 'none'; // הסתרת החיפוש בדפים פנימיים למניעת בלבול
+            }
+        }
+
+        function handleBackNavigation() {
+            if (isSearchMode) {
+                document.getElementById('main-search').value = '';
+                navigateTo('main');
+            } else if (currentPageId === 'content') {
+                goBackToSub();
+            } else if (currentPageId === 'sub') {
+                navigateTo('main');
             }
         }
 
@@ -457,24 +626,36 @@
             bcChild.style.display = 'block';
             bcChild.innerText = subData.title;
 
-            const qaContainer = document.getElementById('qa-container');
-            qaContainer.innerHTML = `<h2>${subData.title} - מדריך מענה לפונים</h2>`;
+            document.getElementById('qa-title').innerText = `${subData.title} - מדריך מענה לפונים`;
+            document.getElementById('qa-controls').style.display = 'flex';
 
-            subData.items.forEach(item => {
+            const qaContainer = document.getElementById('qa-container');
+            qaContainer.innerHTML = '';
+
+            buildQaItems(subData.items, qaContainer);
+            navigateTo('content');
+        }
+
+        // בונה את אלמנטי השאלות והתשובות בקונטיינר
+        function buildQaItems(items, container) {
+            items.forEach(item => {
                 const qaItem = document.createElement('div');
                 qaItem.className = 'qa-item';
-                
+               
                 const question = document.createElement('div');
                 question.className = 'qa-question';
                 question.innerHTML = `<span><i class="far fa-question-circle" style="margin-left:8px;color:var(--primary-color);"></i>${item.q}</span> <i class="fas fa-chevron-down"></i>`;
-                
+               
                 const answer = document.createElement('div');
                 answer.className = 'qa-answer';
                 answer.innerHTML = `
-                    <p>${item.a}</p>
+                    <p class="answer-text">${item.a}</p>
                     <div class="guideline">
                         <i class="fas fa-gavel" style="color:var(--secondary-color);margin-left:5px;"></i>
-                        <strong>הנחיית המוקדן המשפטית:</strong> נוסח זה אינו מהווה ייעץ משפטי אלא מידע כללי בלבד.
+                        <strong>הנחיית המוקדן המשפטית:</strong> נוסח זה אינו מהווה ייעוץ משפטי אלא מידע כללי בלבד.
+                    </div>
+                    <div class="action-area">
+                        <button class="copy-btn" onclick="copyAnswer(this)"><i class="far fa-copy"></i> העתק תשובה</button>
                     </div>
                 `;
 
@@ -486,10 +667,86 @@
 
                 qaItem.appendChild(question);
                 qaItem.appendChild(answer);
-                qaContainer.appendChild(qaItem);
+                container.appendChild(qaItem);
             });
+        }
 
-            navigateTo('content');
+        // שליטה מרוכזת בפתיחה וסגירה של שאלות
+        function toggleAllAnswers(open) {
+            document.querySelectorAll('.qa-answer').forEach(ans => {
+                ans.style.display = open ? 'block' : 'none';
+            });
+            document.querySelectorAll('.qa-question .fa-chevron-down, .qa-question .fa-chevron-up').forEach(icon => {
+                icon.className = open ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+            });
+        }
+
+        // מנגנון העתקה מהירה ללוח
+        function copyAnswer(btn) {
+            const answerContainer = btn.closest('.qa-answer');
+            const textToCopy = answerContainer.querySelector('.answer-text').innerText;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                btn.classList.add('copied');
+                btn.innerHTML = `<i class="fas fa-check"></i> הועתק!`;
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = `<i class="far fa-copy"></i> העתק תשובה`;
+                }, 2000);
+            }).catch(err => {
+                console.error('שגיאה בהעתקת הטקסט: ', err);
+            });
+        }
+
+        // מנגנון החיפוש בזמן אמת
+        function executeSearch() {
+            const query = document.getElementById('main-search').value.trim().toLowerCase();
+            if (!query) {
+                navigateTo('main');
+                return;
+            }
+
+            isSearchMode = true;
+            const results = [];
+
+            // מעבר על כל בסיס הנתונים ומציאת התאמות
+            for (const [topicId, topicData] of Object.entries(db)) {
+                for (const [subId, subData] of Object.entries(topicData.subs)) {
+                    subData.items.forEach(item => {
+                        if (item.q.toLowerCase().includes(query) || item.a.toLowerCase().includes(query)) {
+                            results.push(item);
+                        }
+                    });
+                }
+            }
+
+            const qaContainer = document.getElementById('qa-container');
+            qaContainer.innerHTML = '';
+            document.getElementById('qa-controls').style.display = 'flex';
+            
+            // עדכון פירורי הלחם למצב חיפוש
+            document.getElementById('bc-separator1').style.display = 'block';
+            const bcParent = document.getElementById('bc-parent');
+            bcParent.style.display = 'block';
+            bcParent.innerText = `תוצאות חיפוש עבור: "${query}"`;
+            document.getElementById('bc-separator2').style.display = 'none';
+            document.getElementById('bc-child').style.display = 'none';
+
+            if (results.length === 0) {
+                document.getElementById('qa-title').innerText = `לא נמצאו תוצאות`;
+                qaContainer.innerHTML = `<p style="text-align: center; padding: 20px; color: #718096; font-size: 1.1rem;">לא נמצאו שאלות או תשובות התואמות לביטוי שחיפשת. נסה מילות מפתח אחרות.</p>`;
+                document.getElementById('qa-controls').style.display = 'none';
+            } else {
+                document.getElementById('qa-title').innerText = `נמצאו ${results.length} תוצאות מתאימות:`;
+                buildQaItems(results, qaContainer);
+                // בחיפוש, נוח שהתשובות פתוחות מראש כדי לעיין בהן מהר
+                toggleAllAnswers(true);
+            }
+
+            // הצגת עמוד התוכן עם התוצאות
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-content').classList.add('active');
+            document.getElementById('global-back-btn').style.display = 'inline-flex';
         }
     </script>
 </body>
