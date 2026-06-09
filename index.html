@@ -749,5 +749,534 @@
             document.getElementById('global-back-btn').style.display = 'inline-flex';
         }
     </script>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מדריך זכויות ותגמולי מילואים למעסיקים וחשבי שכר</title>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #f8f9fa;
+            --accent-color: #e63946;
+            --text-color: #333;
+            --border-color: #ddd;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .miluim-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .source-badge {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .topic-section {
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .topic-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.25em;
+            margin: 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .topic-content {
+            padding: 20px;
+            background-color: #fff;
+        }
+        .sub-topic {
+            background: var(--secondary-color);
+            border-right: 4px solid #2a9d8f;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .qa-accordion {
+            margin-top: 15px;
+        }
+        .qa-item {
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+        .qa-question {
+            background-color: #edf2f7;
+            padding: 12px 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .qa-question:hover {
+            background-color: #e2e8f0;
+        }
+        .qa-answer {
+            padding: 15px;
+            display: none;
+            background-color: #fff;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+        }
+        .qa-answer p {
+            margin: 0 0 10px 0;
+        }
+        .qa-answer ul {
+            margin: 0;
+            padding-right: 20px;
+        }
+        .qa-answer li {
+            margin-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: right;
+        }
+        th {
+            background-color: #4a5568;
+            color: white;
+        }
+        .status-forbidden {
+            color: #e63946;
+            font-weight: bold;
+        }
+        .status-allowed {
+            color: #2a9d8f;
+            font-weight: bold;
+        }
+        .arrow::after {
+            content: '▼';
+            font-size: 0.8em;
+        }
+        .active .arrow::after {
+            content: '▲';
+        }
+        .formula-box {
+            background-color: #f7fafc;
+            border: 1px dashed #cbd5e0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="miluim-container">
+    <h1>מרכז מידע משולב: זכויות ותגמולי מילואים</h1>
+    <p style="text-align: center; font-weight: bold;">מדריך מקיף מבוסס על איגרת המוסד לביטוח לאומי מס' 3 והנחיות האכיפה של משרד העבודה</p>
+
+    <!-- נושא 1 -->
+    <div class="topic-section">
+        <div class="topic-header" onclick="toggleSection(this)">
+            <span>1. חובת תשלום התגמול באמצעות המעסיק (סעיף 276 לחוק)</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="topic-content">
+            <div class="source-badge">מקור: סעיף 276 לחוק, איגרת עמ' 1, מצגת משרד העבודה</div>
+            <div class="sub-topic">תתי-נושאים: תנאי סף לחיוב המעסיק, הגדרת ומניין 75 הימים, חובת העברת יתרת התגמול.</div>
+            
+            <div class="qa-accordion">
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">באילו תנאים מצטברים מחויב מעסיק לשלם לעובד את תגמול המילואים כספק מקדמה? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>על פי סעיף 276 לחוק הביטוח הלאומי, המעסיק מחויב לשלם לעובד שכר על חשבון התגמול בסכום השכר שהיה משולם לו אילולא שירת במילואים והוסיף לעבוד, בהתקיים התנאים המצטברים הבאים:</p>
+                        <ul>
+                            <li>העובד מועסק בפועל במקום עבודה.</li>
+                            <li>העובד מקבל משכורת חודשית (עובד חודשי יתבע תמיד ממעסיקו).</li>
+                            <li>אם העובד אינו עובד בשכר חודשי (עובד שעתי/יומי) - הוא עבד 75 ימים לפחות אצל מעסיק אחד או במקום עבודה אחר ברבע השנה שקדם ל-1 לחודש שבו החל שירות המילואים.</li>
+                        </ul>
+                        <p>מי שלא עומד בתנאים אלו, ישלם לו המוסד לביטוח לאומי את התגמול ישירות.</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מה נכלל במדויק בתוך מניין 75 ימי העבודה הנדרשים לעובד שעתי/יומי? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>בכלל 75 הימים האמורים יובאו במניין גם הימים הבאים (אף אם לא בוצעה בהם עבודה בפועל):</p>
+                        <ul>
+                            <li>יום המנוחה השבועית (שבתות) או חגים שאין עובדים בהם, אם על פי חוק ואם על פי הסכם או נוהג.</li>
+                            <li>ימי היעדרות מהעבודה בשל חופשה שניתנה לעובד מאת מעבידו, בין בשכר ובין שלא בשכר.</li>
+                            <li>ימי היעדרות מהעבודה בשל תאונה או מחלה.</li>
+                            <li>ימי אבל במשפחה שמטעמי דת או נוהג לא עבד בהם העובד.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מהי "יתרת תגמול", מה מעמדה המשפטי ומתי יש לשלם אותה? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p><strong>יתרת התגמול</strong> היא ההפרש שבין התגמול שהועבר למעביד מאת המוסד לביטוח לאומי לבין התשלום ששילם המעביד לעובד על חשבון התגמול (המקדמה).</p>
+                        <p><strong>דין יתרת התגמול כדין שכר עבודה לכל דבר ועניין.</strong> המעביד מחויב להעבירה לעובד לכל המאוחר ביום שבו היה משתלם שכרו של העובד בעד החודש שבו הועבר התגמול למעביד.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- נושא 2 -->
+    <div class="topic-section">
+        <div class="topic-header" onclick="toggleSection(this)">
+            <span>2. הגשת תביעה אישית על ידי השכיר לביטוח לאומי</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="topic-content">
+            <div class="source-badge">מקור: איגרת עמ' 2-3, מצגת משרד העבודה</div>
+            <div class="sub-topic">תתי-נושאים: נסיבות למעבר לתביעה אישית, פרוצדורה וטפסים, תביעה להפרשים בגין עליית שכר.</div>
+            
+            <div class="qa-accordion">
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">באילו מקרים ספציפיים ישולם התגמול לעובד באמצעות הגשת תביעה אישית שלו ישירות לביטוח לאומי? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>התגמול ישולם ישירות באמצעות הגשת תביעה אישית של העובד במקרים הבאים:</p>
+                        <ul>
+                            <li>המעסיק הוא פסול-דין, פושט רגל או שניתן נגדו צו קקבלת נכסים.</li>
+                            <li>המעסיק נפטר, וכשהמעסיק הוא תאגיד – אם התחילו לגביו הליכי פירוק או אם חדל להתקיים.</li>
+                            <li>المפעל (מקום העבודה) שבו עבד הזכאי הפסיק לפעול.</li>
+                            <li>העובד היה בחופשה ללא תשלום (חל"ת) יותר מ-60 ימים כאשר יצא למילואים.</li>
+                            <li>עובד בשכר (שעתי/יומי) שעבד פחות מ-75 ימים ב-3 החודשים שקדמו לתחילת השירות.</li>
+                            <li>העובד מועסק אצל יותר ממעסיק אחד, או שהוא גם שכיר וגם עצמאי.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מהי הפרוצדורה, מהם הטפסים ואילו מסמכים נדרש העובד השכיר לצרף לתביעתו האישית? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>תביעה למוסד לביטוח לאומי יש להגיש ב<strong>טופס בל/502</strong>. ניתן להגישה בכל אחד מסניפי המוסד לפי בחירת העובד, או באמצעות אתר האינטרנט או מערכת "ממשל זמין".</p>
+                        <p>לחובה לצרף לתביעה:</p>
+                        <ul>
+                            <li>אישור מתאים מצה"ל (טופס 3010) או אישור מל"ח ממשרד העבודה (טופס כ"א 100).</li>
+                            <li>אישורים מהמעסיקים על תאריכי התחלת והפסקת העבודה ומספר ימי העבודה בפועל.</li>
+                            <li>תלושי שכר או אישורים על השכר ב-6 החודשים שקדמו לשירות.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מתי ניתן להגיש תביעה מיוחדת להפרשים בגין עליית שכר? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>עובד רשאי להגיש תביעה אישית להפרשים במצב שבו שכרו עלה מעל 20% בחודש השירות או בחודשיים שקדמו לחודש השירות, וזאת למשך 3 חודשים רצופים.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- נושא 3 -->
+    <div class="topic-section">
+        <div class="topic-header" onclick="toggleSection(this)">
+            <span>3. העסקה אצל מספר מעסיקים והסדרת דחיות תביעה</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="topic-content">
+            <div class="source-badge">מקור: איגרת עמ' 2, מצגת משרד העבודה</div>
+            <div class="sub-topic">תתי-נושאים: חלוקת תפקידים בין מעסיקים, כפל תביעות, מנגנון קיזוז חוקי במקרה של דחייה.</div>
+            
+            <div class="qa-accordion">
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">כיצד מוסדר התשלום לעובד המועסק אצל שני מעסיקים במקביל או שהוא גם שכיר וגם עצמאי? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>העובד יקבל את תגמול המילואים שלו דרך <strong>המעסיק העיקרי</strong>, ובלבד שהוא עונה אצלו על תנאי הסף (כגון 75 ימי עבודה). בגין המעסיק השני (או בגין היותו עצמאי), העובד יידרש להגיש תביעה אישית נוספת ונפרדת ישירות למוסד לביטוח לאומי.</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מה קורה במצב שבו שני המעסיקים הגישו תביעת החזר (טופס 501) עבור אותו עובד? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>במצב שבו שני המעסיקים מגישים תביעה במקביל עבור אותו עובד, המערכת של הביטוח הלאומי תטפל בתביעה הראשונה שנקלטה, והתביעה השנייה תידחה אוטומטית.</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מהו הנוהל החוקי במידה ומעסיק שילם שכר/מקדמה אך התביעה לביטוח לאומי נדחתה? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>במקרה שהתביעה נדחתה, המעסיק יסדיר עם העובד את אופן החזרת הכספים ששולמו לו, אך הוא כפוף באופן קשיח להוראות חוק הגנת השכר בדבר ניכויים חקוקים:</p>
+                        <ul>
+                            <li>נדרשת התחייבות מפורשת בכתב מהעובד על הסכמתו לניכוי.</li>
+                            <li>הניכוי השוטף משכרו של העובד לא יעלה בשום אופן על רבע (25%) מהשכר המשולם באותו חודש.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- נושא 4 -->
+    <div class="topic-section">
+        <div class="topic-header" onclick="toggleSection(this)">
+            <span>4. שיעור התגמול ונוסחאות חישוב (מינימום, מקסימום ותוספות)</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="topic-content">
+            <div class="source-badge">מקור: איגרת עמ' 3-4</div>
+            <div class="sub-topic">תתי-נושאים: נוסחת חישוב יומית, רכיבי בסיס מזכים, רצפת וסמך תגמול, השפעת אורך השירות.</div>
+            
+            <div class="qa-accordion">
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מהי הנוסחה המדויקת לחישוב שיעור התגמול ליום ואילו רכיבים נכנסים לבסיס השכר? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>שיעור התגמול ליום מחושב לפי השכר ברוטו החייב בדמי ביטוח בשלושת החודשים שקדמו ל-1 בחודש שבו החל שירות המילואים, מחולק ב-90:</p>
+                        <div class="formula-box">תגמול יומי = הכנסה ברבע השנה שקדם לחודש השירות / 90</div>
+                        <p>לצורך החישוב מובאים בחשבון גם: דמי מחלה, תמורת חופשה, דמי אבטלה, תגמולי מילואים, דמי לידה ודמי פגיעה בעבודה.</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מהם סכומי המינימום והמקסימום (הרצפה והתקרה) לתגמול מילואים יומי? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <ul>
+                            <li><strong>מקסימום התגמול (התגמול המרבי):</strong> הינו 5 פעמים הסכום הבסיסי מחולק ב-30.</li>
+                            <li><strong>מינימום התגמול (התגמול המזערי):</strong> 68% מהסכום הבסיסי החודשי מחולק ב-30 (נכון ל-1.1.17 עמד על סכום חודשי של 5,881 ₪). מי שלא צבר 3 חודשי עבודה מלאים או השתכר פחות משכר מינימום, הכנסתו תושלם לתגמול המזערי באותו חודש.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">כיצד משפיע אורך שירות המילואים (שירות קצר, חצי יומי או ממושך) על מכפיל התגמול? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>בהתאם לחוק המילואים, אורך תקופת השירות משנה את מבנה התגמול היומי באופן הבא:</p>
+                        <ul>
+                            <li><strong>שירות רצוף של 7 ימים (או כפולות של 7):</strong> משולם תגמול יומי רגיל כפול מספר הימים.</li>
+                            <li><strong>שירות של 6 ימים (או יתרה של 6 ימים מעבר לכפולות של 7, כגון 13, 20, 27 ימים):</strong> התגמול היומי יחושב בדומה לשירות של 7 ימים (כלומר, העובד מקבל תשלום מלא עבור 7 ימים - הטבה בחוק).</li>
+                            <li><strong>שירות קצר של 1 עד 5 ימים:</strong> המשרת זכאי לתוספת מיוחדת של 40%, ולכן התגמול היומי יוכפל ב-1.4.</li>
+                            <li><strong>שירות חצי יומי:</strong> משולם מחצית (50%) משיעור התגמול היומי, ללא תוספת ה-40%.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- נושא 5 -->
+    <div class="topic-section">
+        <div class="topic-header" onclick="toggleSection(this)">
+            <span>5. חובת הפרשות סוציאליות ורצף פנסיוני (סעיף 283 לחוק)</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="topic-content">
+            <div class="source-badge">מקור: סעיף 283 לחוק, איגרת עמ' 3-4, מצגת משרד העבודה</div>
+            <div class="sub-topic">תתי-נושאים: חובת הפרשות לקופות גמל ופנסיה, קביעת בסיס השכר להפרשה, מנגנון גביית חלק העובד בתביעה אישית.</div>
+            
+            <div class="qa-accordion">
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מהן חובות המעסיק לגבי המשך ביצוע הפרשות סוציאליות ופנסיוניות בתקופת המילואים? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>סעיף 283 לחוק מחייב את המעסיק להמשיך ולשלם לעובד שיצא למילואים את התשלומים שנהג לשלם לקופת תגמולים, ביטוח פנסיה או קרן השתלמות כאילו לא שירת והמשיך לעבוד כרגיל. המעסיק חייב להפריש את מלוא ההפרשות, כולל חלק המעסיק וחלק העובד.</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מאיזה בסיס שכר ספציפי יש לגזור את אחוזי ההפרשה לקופות השונות בזמן המילואים? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>על פי חוות דעת משפטית רשמית, <strong>יש להפריש את אותן הפרשות סוציאליות המנוכות בדרך כלל מהשכר הרגיל של העובד לאותה תקופה (השכר המשוער בשגרה)</strong>, ולא מסך כל התגמול שהתקבל מביטוח לאומי (אשר בדרך כלל גבוה מהשכר הרגיל בשל התוספות).</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">כיצד מבוצעת הפרשת חלק העובד במידה והעובד קיבל את התגמול שלו ישירות מביטוח לאומי? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>ככל שהעובד מקבל את תגמול המילואים ישירות מהביטוח הלאומי (בתביעה אישית), המעסיק עדיין מחויב להעביר פיזית את מלוא ההפרשות (כולל חלק העובד) לקופות הפנסיה במועדן, ובהמשך הוא רשאי לנכות את חלק העובד משכרו העתידי של העובד.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- נושא 6 -->
+    <div class="topic-section">
+        <div class="topic-header" onclick="toggleSection(this)">
+            <span>6. רכיבי שכר מיוחדים: דין מותר ואסור בקיזוז</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="topic-content">
+            <div class="source-badge">מקור: מצגת משרד העבודה (טבלת אכיפה), איגרת עמ' 4-5</div>
+            <div class="sub-topic">תתי-נושאים: סכומים עקב עבודה בפועל, סכומים המשולמים בין שעבד ובין שנעדר, שווי רכב, יתרת תגמול שלילית, פירוט בתלוש.</div>
+            
+            <p>להלן טבלת דין הקיזוז המלאה המוגדרת על ידי מנהל האכיפה במשרד העבודה:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>מהות התשלום בשגרה / במילואים</th>
+                        <th>מותר / אסור לקזז מהתגמול</th>
+                        <th>הסבר ופירוט משפטי חוקי</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>שכר עבור עבודה בפועל במהלך המילואים</strong> (כולל נסיעות/החזרי הוצאות עבודה)</td>
+                        <td class="status-forbidden">אסור לקזז</td>
+                        <td>שכר עבור עבודה שבוצעה בפועל (לדוגמה מילואים מחוץ לשעות העבודה או בסופי שבוע ללא היעדרות). המשרת זכאי למלוא התגמול בנוסף לשכרו.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>שווי רכב צמוד</strong> (כאשר הרכב נשאר פיזית בשימוש העובד במילואים)</td>
+                        <td class="status-forbidden">אסור לקזז</td>
+                        <td>מדובר בטובת הנאה המשולמת בין שעבד ובין שנעדר. חובה להציג "שווי רכב" בתלוש לצורכי מס מכוח הוראות רשות המיסים, אך אסור לנכות סכום כספי מהעובד.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>שווי רכב צמוד</strong> (כאשר הרכב הוחזר למעסיק ונשאר בחצריו)</td>
+                        <td class="status-forbidden">אסור לקזז</td>
+                        <td>המעסיק לא יכניס שווי רכב (או יכניס יחסי לפי רשות המיסים). מאחר שמדובר בהטבה שלא ניתנה, אסור למעסיק לבצע ניכוי כספי מהעובד בגין רכיב זה (אין לנכות סכום שלא "שולם").</td>
+                    </tr>
+                    <tr>
+                        <td><strong>דמי הבראה, ביגוד, משכורת י"ג</strong> (תשלומים שנתיים)</td>
+                        <td class="status-forbidden">אסור לקזז</td>
+                        <td>סכומים המשולמים בין שהוסיף לעבוד ובין שנעדר מעבודתו מכל סיבה (כמו חופשה). החוק אוסר להביא בחשבון סכומים חד פעמיים אלו כדי להפחית מהתגמול.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>דמי חגים לעובד שעתי / תשלום רגיל בחג לחודשי</strong></td>
+                        <td class="status-forbidden">אסור לקזז</td>
+                        <td>תשלום המשולם בין שעבד ובין שנעדר, יש לשלמו במלואו ללא ניכוי יחסי בשל שירות המילואים.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>שי לחג</strong></td>
+                        <td class="status-forbidden">אסור לקזז</td>
+                        <td>תשלום קבוע הניתן לכלל העובדים ללא תלות בנוכחות פיזית באותו יום עבודה.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>שכר / משכורת רגילה על חשבון התגמול</strong> (מקדמה שוטפת)</td>
+                        <td class="status-allowed">מותר לקזז</td>
+                        <td>המעסיק מקזז את השכר הרגיל (המקדמה) ששילם לעובד בחודש השירות מתוך סך התגמול שהתקבל מביטוח לאומי, על מנת להעביר לו את יתרת ההפרש.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>יתרת תגמול שלילית</strong> (השכר הרגיל גבוה מסך התגמול)</td>
+                        <td class="status-forbidden">אסור לקזז</td>
+                        <td>חובת תשלום השכר הרגיל לעובד אילולא יצא למילואים אינה מוגבלת עד לגובה התגמול. המעסיק מחויב לספוג את ההפרש לטובת העובד.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="qa-accordion">
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מהן החובות הניהוליות לגבי עריכת תלוש השכר של העובד וחישוב ערך יום לעובד חודשי? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>בתלוש השכר יש חובה חוקית לפרט את מרכיבי השכר במדויק:</p>
+                        <ul>
+                            <li>יש לציין במפורש רכיב בשם: "תשלום על חשבון תגמול מילואים".</li>
+                            <li>עבור עובד חודשי ששירת מספר ימים בחודש, חובה לבצע הפרדה מוחלטת בתלוש בין שכר עבור ימי עבודה בפועל לבין ימי מילואים.</li>
+                            <li><strong>נוסחת ערך יום לעובד חודשי:</strong> ערך יום לצורך ההפרדה מוגדר באופן קבוע כחלק ה-<strong>21.67</strong> מהמשכורת החודשית של העובד.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- נושא 7 -->
+    <div class="topic-section">
+        <div class="topic-header" onclick="toggleSection(this)">
+            <span>7. ניכויי חובה, החזרי מעסיק ושקיפות מול העובד</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="topic-content">
+            <div class="source-badge">מקור: איגרת עמ' 5-6</div>
+            <div class="sub-topic">תתי-נושאים: ניכויי מס סטטוטוריים, הגשת טופס 501, מכתב היידוע הישיר לעובד לשמירת זכויותיו.</div>
+            
+            <div class="qa-accordion">
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">אילו ניכויי חובה חוקיים מבוצעים מתגמול המילואים ומה ההבדל בין המסלולים? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <ul>
+                            <li><strong>עובד שכיר שמקבל את התגמול ממעסיקו:</strong> ינוכו מהתגמול על ידי המעסיק דמי ביטוח לאומי, דמי ביטוח בריאות ומס הכנסה, בדיוק כפי שמנוכה מהכנסתו הרגילה מעבודה בשגרה.</li>
+                            <li><strong>עובד שכיר שמגיש תביעה אישית (טופס בל/502):</strong> ינוכו מהתגמול על ידי המוסד לביטוח לאומי דמי ביטוח בריאות ומס הכנסה בלבד.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">כיצד מגיש המעסיק תביעה לקבלת החזר מהביטוח הלאומי על הכספים ששילם לעובדיו? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>כדי לקבל את החזר התגמולים, על המעסיק להגיש תביעה על גבי <strong>טופס בל/501</strong> בסניף המוסד לביטוח לאומי שבו מתנהל חשבון דמי הביטוח שלו. בטבלת השכר בטופס, ירשום המעסיק את השכר ברוטו החייב בדמי ביטוח.</p>
+                        <p>המוסד לביטוח לאומי יחשב את התגמול על פי השכר שדווח, ויוסיף עליו תוספות יוקר והשלמות לשכר מינימום במקרה הצורך. אם המוסד שילם למעסיק סכום הגבוה מהשכר ששולם לעובד, חובה מוחלטת על המעסיק לשלם לעובד את הפרש התגמול.</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleQA(this)">מהו מנגנון הבקרה והשקיפות שהביטוח הלאומי מפעיל מול העובד השכיר? <span class="arrow"></span></div>
+                    <div class="qa-answer">
+                        <p>עם ביצוע החזר התגמול למעסיק, המוסד לביטוח לאומי שולח באופן אוטומטי <strong>מכתב אישי ישיר לביתו של כל עובד שכיר</strong>.</p>
+                        <p>מכתב זה מפרט במדויק את גובה התגמול המגיע לו (וששולם בפועל למעסיקו). מכתב זה נועד לאפשר לעובד לבצע בקרה מלאה, לפנות למעסיקו במידת הצורך, ולוודא כי מיצה את מלוא זכויותיו על פי החוק.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // פונקציה לפתיחה וסגירה של נושאים ראשיים
+    function toggleSection(header) {
+        header.classList.toggle('active');
+        const content = header.nextElementSibling;
+        if (content.style.display === 'none' || content.style.display === '') {
+            content.style.display = 'block';
+        } else {
+            content.style.display = 'none';
+        }
+    }
+
+    // פונקציה לפתיחה וסגירה של שאלות ותשובות (Accordion)
+    function toggleQA(question) {
+        question.classList.toggle('active');
+        const answer = question.nextElementSibling;
+        if (answer.style.display === 'block') {
+            answer.style.display = 'none';
+        } else {
+            answer.style.display = 'block';
+        }
+    }
+
+    // הגדרת ברירת מחדל - כל הנושאים הראשיים פתוחים בתחילה
+    document.querySelectorAll('.topic-header').forEach(header => {
+        header.classList.add('active');
+    });
+</script>
 </body>
 </html>
+
+
+
