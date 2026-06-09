@@ -4,6 +4,926 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מערכת זכויות עובדים בחירום - היחידה ליחסי עבודה - עו"ד אבראהים כילאני</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #d69e2e;
+            --bg-color: #f7fafc;
+            --text-color: #2d3748;
+            --card-bg: #ffffff;
+            --success-color: #2f855a;
+            --danger-color: #c53030;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary-color);
+        }
+
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header p { margin: 5px 0 0 0; font-size: 1.05rem; color: #e2e8f0; }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .navigation-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 10px;
+            font-size: 1rem;
+            color: #4a5568;
+            align-items: center;
+            background: #edf2f7;
+            padding: 10px 15px;
+            border-radius: 6px;
+            flex-grow: 1;
+        }
+
+        .breadcrumb span { cursor: pointer; color: var(--primary-color); font-weight: bold; }
+        .breadcrumb span:hover { text-decoration: underline; }
+        .breadcrumb .active { color: #718096; cursor: default; font-weight: normal; }
+
+        .back-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .back-btn:hover {
+            background-color: #2c5282;
+        }
+
+        .search-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .search-input-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+        }
+
+        /* תיקון 7: שיפור נראות מקצועית לתיבת החיפוש */
+        .search-box {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1.05rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .search-box:focus {
+            border-color: var(--primary-color);
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        /* תיקון 7: הוספת min-height לכרטיסים */
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary-color);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 220px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .card h3 { margin: 0 0 10px 0; font-size: 1.3rem; color: var(--primary-color); }
+        .card p { margin: 0; color: #718096; font-size: 0.95rem; line-height: 1.4; }
+
+        .qa-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .qa-header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .qa-section h2 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .controls-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            background: #edf2f7;
+            border: none;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #4a5568;
+            transition: background 0.2s;
+        }
+
+        .control-btn:hover { background: #e2e8f0; }
+
+        /* תיקון 7: שיפור נראות ואפקט מעבר פריט */
+        .qa-item {
+            border-bottom: 1px solid #edf2f7;
+            padding: 15px 0;
+            transition: all .2s ease;
+        }
+
+        .qa-item:hover {
+            background: #fcfcfc;
+        }
+
+        /* תיקון 7: שיפור אפקט הובר לשאלה */
+        .qa-question {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2c5282;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .qa-question:hover {
+            color: #1a365d;
+        }
+
+        /* תיקון 7: שיפור נראות מקצועית לתשובה פתוחה */
+        .qa-answer {
+            margin-top: 12px;
+            line-height: 1.6;
+            color: var(--text-color);
+            display: none;
+            padding-right: 15px;
+            border-right: 3px solid var(--secondary-color);
+            font-size: 1rem;
+            position: relative;
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .guideline {
+            background-color: #fffaf0;
+            border: 1px solid #feebc8;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .benefits-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+
+        .benefits-table th, .benefits-table td {
+            border: 1px solid #cbd5e0;
+            padding: 10px;
+            text-align: right;
+        }
+
+        .benefits-table th {
+            background-color: #edf2f7;
+            color: var(--primary-color);
+        }
+
+        .status-allowed {
+            color: var(--success-color);
+            font-weight: bold;
+            background-color: #f0fff4;
+        }
+
+        .status-forbidden {
+            color: var(--danger-color);
+            font-weight: bold;
+            background-color: #fff5f5;
+        }
+
+        .badge-enforcement {
+            display: inline-block;
+            background-color: #fed7d7;
+            color: #9b2c2c;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .action-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .copy-btn {
+            background-color: #f7fafc;
+            border: 1px solid #cbd5e0;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #4a5568;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: #edf2f7;
+            color: var(--primary-color);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .footer-credit {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            border-top: 1px solid #e2e8f0;
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* תיקון 5: התאמה רספונסיבית מלאה לניידים */
+        @media (max-width: 768px) {
+            .navigation-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .back-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .qa-header-area {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .controls-btns {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .control-btn {
+                flex: 1;
+                min-width: 80px;
+                text-align: center;
+                justify-content: center;
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .benefits-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        /* הגדרות עיצוב ייעודיות להדפסה נקייה */
+        @media print {
+            body { background: white; color: black; }
+            header, .navigation-wrapper, .search-container, .controls-btns, .action-area, .footer-credit { display: none !important; }
+            .page { display: none !important; }
+            #page-content.active, #page-content.active .qa-section { display: block !important; border: none; padding: 0; box-shadow: none; }
+            .qa-answer { display: block !important; background: transparent; padding: 10px 0; border-right: 2px solid #cbd5e0; }
+            .qa-item { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>זכויות עובדים בחירום ובמילואים - היחידה ליחסי עבודה</h1>
+        <p>מבוסס על החומרים המקצועיים של היחידה ליחסי עבודה ריכז וערך עו"ד אבראהים כילאני • ראש צוות ייעוץ משפטי ביחסי עבודה - לשימוש פנימי בלבד</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="navigation-wrapper">
+            <div class="breadcrumb" id="breadcrumb">
+                <span onclick="navigateTo('main')">נושאים ראשיים</span>
+                <div id="bc-separator1" style="display:none;"> &gt; </div>
+                <span id="bc-parent" style="display:none;" onclick="goBackToSub()"></span>
+                <div id="bc-separator2" style="display:none;"> &gt; </div>
+                <span id="bc-child" class="active" style="display:none;"></span>
+            </div>
+            
+            <button id="global-back-btn" class="back-btn" style="display: none;" onclick="handleBackNavigation()">
+                <i class="fas fa-arrow-right"></i> חזור למסך הקודם
+            </button>
+        </div>
+
+        <div id="search-section" class="search-container">
+            <div class="search-input-wrapper">
+                <input type="text" id="main-search" class="search-box" placeholder="חפש שאלה, מילת מפתח או זכות משפטית (לדוגמה: הגנה מפיטורים, חל''ת, תגמולים, קיזוז)..." oninput="executeSearch()">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <div id="page-main" class="page active">
+            <div class="grid">
+                <div class="card" onclick="openTopic('miluim')">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>שירות מילואים ובני זוג</h3>
+                    <p>הגנה מפיטורים (30 ו-60 יום), תגמולי מילואים, איסור פגיעה במשרה, וזכויות מיוחדות לבני הזוג.</p>
+                </div>
+                <div class="card" onclick="openTopic('emergency')">
+                    <i class="fas fa-bullhorn"></i>
+                    <h3>חוק הגנה בשעת חירום</h3>
+                    <p>איסור פיטורים עקב הנחיות פיקוד העורף, סגירת מוסדות חינוך, מפעלים חיוניים ועבודה מרחוק.</p>
+                </div>
+                <div class="card" onclick="openTopic('leves')">
+                    <i class="fas fa-calendar-minus"></i>
+                    <h3>חל"ת, חופשות ושינויי שכר</h3>
+                    <p>חופשה כפויה, הסכמת עובד לחל"ת, הגנות נשים, צבירת חופשה שנתית והרעת תנאים.</p>
+                </div>
+                <div class="card" onclick="openTopic('shaagat')">
+                    <i class="fas fa-clock"></i>
+                    <h3>מבצע "שאגת הארי" 2026</h3>
+                    <p>הסדרים מיוחדים בין 28.02.2026 ל-14.04.2026, אבטלה מקילה, בני 67+ ותוקף תיאום מס.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-sub" class="page">
+            <div class="grid" id="sub-grid"></div>
+        </div>
+
+        <div id="page-content" class="page">
+            <div class="qa-section">
+                <div class="qa-header-area">
+                    <h2 id="qa-title">מדריך מענה לפונים</h2>
+                    <div class="controls-btns" id="qa-controls">
+                        <button class="control-btn" onclick="toggleAllAnswers(true)"><i class="fas fa-expand-alt"></i> פתח הכל</button>
+                        <button class="control-btn" onclick="toggleAllAnswers(false)"><i class="fas fa-compress-alt"></i> סגור הכל</button>
+                        <button class="control-btn" onclick="window.print()">
+                            <i class="fas fa-print"></i> הדפס / שמור כ-PDF
+                        </button>
+                    </div>
+                </div>
+                <div id="qa-container"></div>
+            </div>
+        </div>
+
+        <div class="footer-credit">
+             כל הזכויות שמורות לעו"ד אבראהים כילאני - היחידה ליחסי עבודה • נתקלתם במידע לא מדויק אנא פנו לעו"ד אבראהים כילאני<br>
+             <span id="version-date" style="font-size: 0.85rem; color: #a0aec0; font-weight: normal;"></span>
+        </div>
+    </div>
+
+    <script>
+        // תיקון 2: מסד הנתונים מנוקה לחלוטין מתגיות משובשות ומכיל אובייקטים חוקיים בלבד
+        const db = {
+            miluim: {
+                title: "שירות מילואים ובני זוג",
+                subs: {
+                    protection30: {
+                        title: "הגנה מפיטורים (תקופה של 30 יום)",
+                        items: [
+                            {
+                                q: "האם מותר לפטר עובד במהלך שירות מילואים או מיד לאחריו?",
+                                a: "אסור לפטר עובד בשל שירותו במילואים, קריאתו לשירות או שירותו הצפוי. כמו כן, חל איסור מוחלט לפטר עובד מכל סיבה שהיא במהלך השירות עצמו. אם שירות המילואים עלה על יומיים רצופים, אסור לפטרו מכל סיבה שהיא במשך 30 ימים מתום השירות, אלא בהיתר מיוחד מוועדת התעסוקה במשרד הביטחון."
+                            },
+                            {
+                                q: "כיצד משפיעים 30 הימים המוגנים על ימי ההודעה המוקדמת?",
+                                a: "במניין ימי ההודעה המוקדמת לפיטורים אין למנות את 30 הימים שלאחר תום שירות המילואים. תקופת ההודעה המוקדמת יכולה להתחיל או להמשיך להיספר רק לאחר שחלפו לחלוטין 30 הימים המוגנים מסיום השירות."
+                            }
+                        ]
+                    },
+                    protection60: {
+                        title: "הגנה מורחבת (ימים 31 עד 60 והוראות ועדת פיקוח)",
+                        items: [
+                            {
+                                q: "מהם התנאים והזכויות להגנה המורחבת בימים 31 עד 60 שלאחר המילואים?",
+                                a: "על פי צווי ההרחבה, עובד שנעדר בשל שירות מילואים במשך 60 ימים מצטברים או יותר במהלך השנה הקלנדרית, ושירת לפחות 7 ימים רצופים, נהנה מהגנה מורחבת בימים 31 עד 60 שלאחר תום השירות. בתקופה זו חל איסור לפטרו, להוציאו לחל\"ת או לפגוע בתנאי עבודתו, אלא אם התקבל אישור מראש מוועדת הפיקוח."
+                            },
+                            {
+                                q: "כיצד פועל מנגנון הבקשה וההחלטה של ועדת הפיקוח במשרד העבודה?",
+                                a: "מעסיק המבקש לפטר או להוציא לחל\"ת עובד המוגן בימים 31–60 מחויב לפנות לוועדת הפיקוח במשרד העבודה (במייל VaadatPikuachMiluim@labor.gov.il). הפיטורים או החל\"ת מעוכבים אוטומטית ואינם נכנסים לתוקף עד להכרעת הוועדה, שמחויבת לפנות לעובד לקבלת תגובתו ולתת החלטה תוך 14 יום."
+                            }
+                        ]
+                    },
+                    terms_change: {
+                        title: "איסור פגיעה בהיקף משרה או הכנסה",
+                        items: [
+                            {
+                                q: "האם מותר למעסיק לצמצם משרה או להפחית שכר לעובד שחזר ממילואים?",
+                                a: "חל איסור על מעסיק לפגוע בהיקף המשרה או בהכנסה של עובד בתקופת המילואים ובמשך 30 יום לאחריו, אלא בהיתר מוועדת התעסוקה. כמו כן, למי שזכאי להגנת צו ההרחבה (60 ימי מילואים מצטברים), חל איסור לפגוע בתנאי עבודתו (כולל ניוד תפקיד או שינוי מטלות) גם בימים 31 עד 60 מתום השירות, אלא באישור ועדת הפיקוח."
+                            }
+                        ]
+                    },
+                    partners_rights: {
+                        title: "הגנות וזכויות לבני זוג של משרתי מילואים",
+                        items: [
+                            {
+                                q: "האם מותר לפטר או להוציא לחל\"ת בן/בת זוג של משרת מילואים?",
+                                a: "חוק חיילים משוחררים (תיקון מס' 19 שבתוקף עד 17.7.2026) קובעים כי אסור לפטר או להוציא לחל\"ת עובד/ת שיש להם ילד משותף מתחת לגיל 14 (או עד גיל 21 עם צרכים מיוחדים) בתקופת שירות המילואים של בן הזוג, אם השירות הוא בצו 8 או נמשך לפחות 21 ימים רצופים, אלא בהיתר מוועדת התעסוקה. הגנת הפיטורים הכללית חלה גם על הורי אומנה ושותפים להורות."
+                            },
+                            {
+                                q: "מהם ימי ההיעדרות בתשלום המגיעים לבני זוג לפי המכסות המעודכנות?",
+                                a: "בן זוג של משרת מילואים (עם ילד מתחת לגיל 14 או נסיבות רפואיות/מוגבלות של קרוב) זכאי לימי היעדרות בתשלום מלא ע\"ח המעסיק לפי מכסה שנתית מצטברת:<br>• עד 30 ימי מילואים של בן הזוג: 0 ימי היעדרות.<br>• 31 עד 60 ימי מילואים: 2 ימי היעדרות.<br>• 61 עד 90 ימי מילואים: 4 ימי היעדרות.<br>• 91 עד 120 ימי מילואים: 6 ימי היעדרות.<br>• 121 ימי מילואים ומעלה: 8 ימי היעדרות."
+                            }
+                        ]
+                    },
+                    miluim_benefits: {
+                        title: "תגמולי מילואים ורכיבי שכר (הנחיות לחשבים)",
+                        items: [
+                            {
+                                q: "מהו כלל היסוד לגבי תשלום תגמול המילואים באמצעות המעסיק (סעיף 276 לחוק)?",
+                                a: "מי שנקרא לשירות מילואים זכאי לתגמול מהמוסד לביטוח לאומי. המעסיק ישלם שכר לעובד על חשבון התגמול בסכום השכר שהיה משולם לעובד אילולא שירת במילואים והוסיף לעבוד. העובד זכאי למלוא התגמול, כולל יתרת התגמול (ההפרש בין מה ששולם על ידי המעסיק לבין מה שהתקבל מביטוח לאומי). מי שלא עומד בתנאי החוק, הביטוח הלאומי ישלם לו את התגמול ישירות."
+                            },
+                            {
+                                q: "מהם התנאים המצטברים שבהם המעסיק מחויב לשלם את התגמול ישירות לעובד?",
+                                a: "חובת התשלום הישיר והטיפול בתביעה מול ביטוח לאומי חלה על המעסיק בהתקיים התנאים הבאים:<br>1. העובד מועסק בפועל במקום העבודה.<br>2. העובד מקבל משכורת חודשית.<br>3. העובד עבד <b>75 ימים לפחות</b> אצל מעסיק אחד או במקום עבודה אחר ברבע השנה שקדם ל-1 לחודש שבו החל שירות המילואים."
+                            },
+                            {
+                                q: "אילו ימי היעדרות מובאים ומחושבים במניין 75 ימי העבודה הנדרשים?",
+                                a: "בכלל 75 ימי העבודה האמורים, יובאו במניין ובחישוב גם ימי ההיעדרות הבאים:<br>• יום המנוחה השבועית או חג שאין עובדים בהם, אם על פי חוק ואם על פי הסכם או נוהג.<br>• ימי היעדרות מהעבודה בשל חופשה שניתנה לעובד מאת מעבידו, בין בשכר ובין שלא בשכר.<br>• ימי היעדרות מהעבודה בשל תאונה או מחלה.<br>• ימי אבל במשפחה שמטעמי דת או נוהג לא עבד בהם העובד."
+                            },
+                            {
+                                q: "מה דינו של עובד המועסק אצל שני מעסיקים במקביל?",
+                                a: "שכיר המועסק אצל שני מעסיקים (או שהוא גם שכיר וגם עצמאי) יקבל את תגמול המילואים מהמעסיק העיקרי, ובלבד שהוא עונה על התנאים הכלליים. לגבי המעסיק השני, העובד יצטרך להגיש תביעה אישית בנפרד. במצב שבו שני המעסיקים הגישו תביעה עבורו בטעות, התביעה הראשונה שתגיע לביטוח הלאומי תטופל והשנייה תידחה."
+                            },
+                            {
+                                q: "מה קורה אם המעסיק שילם לעובד מקדמות אך תביעת התגמול נדחתה בביטוח לאומי?",
+                                a: "מעסיק ששילם שכר על חשבון תגמול המילואים והתביעה לתגמול נדחתה בסופו של דבר על ידי הביטוח הלאומי, יסדיר עם העובד את אופן החזרת הכספים ששולמו. החזר הכספים חייב להתבצע אך ורק בכפוף להוראות חוק הגנת השכר בדבר ניכויים מותרים (דורש התחייבות מפורשת בכתב מהעובד, וגובה הניכוי החודשי לא יעלה על רבע משכר העבודה)."
+                            },
+                            {
+                                q: "באילו מקרים מיוחדים התגמול לא משולם דרך המעסיק והעובד מחויב להגיש תביעה אישית?",
+                                a: "על פי סעיף 276 לחוק ותקנות הביטוח הלאומי, התגמול ישולם לעובד ישירות באמצעות הגשת תביעה אישית במקרים הבאים:<br>• המעסיק הוא פסול-דין, פושט רגל או שניתן נגדו צו קבלת נכסים.<br>• המעסיק נפטר, וכשהמעסיק הוא תאגיד – אם התחילו לגביו הליכי פירוק או אם חדל להתקיים.<br>• המפעל או מקום העבודה שבו עבד הזכאי הפסיק לפעול לחלוטין.<br>• העובד היה בחופשה ללא תשלום (חל\"ת) יותר מ-60 ימים כאשר יצא למילואים.<br>• עובד בשכר (שעתי או יומי) שעבד פחות מ-75 ימים ב-3 החודשים שקדמו לתחילת השירות.<br>• העובד מועסק גם כשכיר וגם כעצמאי במקביל, או מועסק אצל יותר ממעסיק אחד (לגבי המשרה המשנית).<br>• הגשת תביעה להפרשים למי ששכרו עלה מעל 20% בחודש השירות או בחודשיים שקדמו לו למשך 3 חודשים רצופים."
+                            },
+                            {
+                                q: "מהן החובות הפנסיוניות והפרשות המעסיק לקופות הגמל בזמן מילואים?",
+                                a: "<div class='badge-enforcement'><i class='fas fa-exclamation-triangle'></i> נושא באכיפת משרד העבודה</div><br>עובד הזכאי לתגמול מילואים והוא ומעסיקו נהגו לשלם תשלומים לביטוח פנסיה או לקרן השתלמות, המעסיק <b>חייב להמשיך להפריש את מלוא ההפרשות כולל חלק העובד</b> (סעיף 283). ככל שהעובד מקבל את התגמול ישירות מביטוח לאומי, המעסיק מעביר את חלקו וחלק העובד לקופות באופן שוטף, ובהמשך ינכה את חלק העובד משכרו.<br><b>כלל זהב לחשבי שכר:</b> יש להפריש מהשכר הרגיל ולא מסך כל תגמול המילואים (שבדרך כלל גבוה מהשכר)."
+                            },
+                            {
+                                q: "מהם חוקי הקיזוז ומה מותר או אסור לנכות מתוך תגמול המילואים (סעיף 276)?",
+                                a: "דין יתרת התגמול (ההפרש שבין התגמול שהועבר למעביד לבין התשלום השוטף ששולם לעובד) הוא <b>כדין שכר עבודה</b>, והמעביד יעבירו לעובד לכל המאוחר ביום שבו משולם השכר הרגיל באותו חודש.<br><br><b>טבלת חוקיות הקיזוז והצגה בתלוש השכר המלאה:</b><br><table class='benefits-table'><thead><tr><th>מהות התשלום</th><th>סטטוס קיזוז</th><th>הסבר והנחיות לחשב השכר</th></tr></thead><tbody><tr><td><b>שכר עבור עבודה בפועל ומילואים</b></td><td class='status-allowed'>מותר (פיצול בתלוש)</td><td>לעובד חודשי יש להפריד בתלוש בין ימי עבודה בפועל לבין ימי מילואים. ערך יום מחושב כחלק ה-21.67 מהמשכורת.</td></tr><tr><td><b>סכום ששילם לעובד עקב עבודתו בפועל</b></td><td class='status-forbidden'>אסור לקזז</td><td>שכר עבור עבודה שבוצעה במהלך שירות המילואים בפועל, כולל החזרי הוצאות נסיעה בשל עבודה בפועל, ישולם במלואו בנוסף לתגמול.</td></tr><tr><td><b>שווי רכב (כשהרכב נשאר אצל העובד)</b></td><td class='status-forbidden'>אסור לקזז</td><td>אם בתקופת המילואים הרכב נשאר בשימושו של העובד, המעסיק חייב להכניס בתלוש רכיב 'שווי רכב' החייב במס, שכן זו טובת הנאה. אין מדובר בתשלום בפועל אלא בשווי ההטבה, ולכן אסור לנכות סכום זה מהתגמול הכספי.</td></tr><tr><td><b>שווי רכב (כשהרכב הוחזר למעסיק)</b></td><td class='status-forbidden'>אסור לקזז סכום שלא שולם</td><td>אם הרכב הוחזר למעסיק, המעסיק לא יכניס רכיב שווי רכב (או יכניס יחסי לפי חוזר רשות המיסים), ואינו רשאי לנכות או לקזז מהתגמול סכום כספי בגין החזרת הרכב.</td></tr><tr><td><b>דמי הבראה, חגים ושי לחג</b></td><td class='status-forbidden'>אסור לקזז</td><td>מדובר בתשלומים המשולמים לעובד בין שהוסיף לעבוד ובין שנעדר מעבודתו כדין, ולכן אין למעסיק כל זכות לנכותם או לקזזם מתגמול המילואים.</td></tr><tr><td><b>יתרת תגמול שלילית</b></td><td class='status-forbidden'>אסור לקזז</td><td>אם השכר הרגיל של העובד גבוה מסך התגמול שהתקבל מהביטוח הלאומי, חובת המעסיק לשלם את השכר המלא נותרת בעינה, והמעסיק נושא בהפרש ואינו רשאי לקזז זאת מהעובד.</td></tr></tbody></table>"
+                            }
+                        ]
+                    }
+                }
+            },
+            emergency: {
+                title: "חוק הגנה בשעת חירום",
+                subs: {
+                    home_front: {
+                        title: "הנחיות פיקוד העורף ואיסור פיטורים",
+                        items: [
+                            {
+                                q: "האם מותר לפטר עובד שלא הגיע לעבודה בשל הנחיות פיקוד העורף?",
+                                a: "חוק הגנה על עובדים בשעת חירום אוסר לחלוטין על פיטורי עובד אשר נעדר מעבודתו או לא ביצע אותה בשל הוראה מפורשת של פיקוד העורף (כגון איסור התקהלות, סגירת אזורי תעשייה או היעדר מרחב מוגן תקני במקום העבודה)."
+                            }
+                        ]
+                    },
+                    schools: {
+                        title: "היעדרות עקב סגירת מוסדות חינוך",
+                        items: [
+                            {
+                                q: "מהם התנאים המזכים עובד בהגנה מפני פיטורים עקב השגחה על ילדו?",
+                                a: "עובד המחסיר ימי עבודה לצורך השגחה על ילדו (עד גיל 14, או עד גיל 21 אם הוא עם צרכים מיוחדים) עקב סגירת מוסד החינוך בהוראת שעה בחירום, מוגן לחלוטין מפיטורים, ובלבד שבמועד ההיעדרות מקום העבודה או מוסד החינוך נמצאים באזור ההכרזה, ושההורה השני לא נעדר מהעבודה לצורך ההשגחה או שאין אפשרות אחרת להשגחה סבירה."
+                            }
+                        ]
+                    }
+                }
+            },
+            leves: {
+                title: "חל\"ת, חופשות ושינויי שכר",
+                subs: {
+                    forced_leave: {
+                        title: "הוצאה כפויה לחופשה שנתית",
+                        items: [
+                            {
+                                q: "האם מעסיק רשאי לחייב עובד לצאת לחופשה שנתית בחירום?",
+                                a: "המעסיק מנהל את סידור העבודה ורשאי להוציא עובד לחופשה שנתית על חשבון ימי החופשה הצבורים שלו, בתנאי שיש לעובד יתרת ימי חופשה חיובית. אם תקופת החופשה הרצופה היא 7 ימים ומעלה, החוק מחייב הודעה מראש בכתב של שבועיים לפחות. אין להוציא עובד לחופשה כפויה בצבירה שלילית אלא בהסכמתו המפורשת."
+                            }
+                        ]
+                    },
+                    unpaid_leave: {
+                        title: "הוצאה לחל\"ת (חופשה ללא תשלום)",
+                        items: [
+                            {
+                                q: "האם מותר למעסיק להוציא עובד לחל\"ת באופן חד-צדדי?",
+                                a: "הוצאה לחל\"ת מחייבת את הסכמתו המפורשת של העובד בכתב. הוצאה לחל\"ת כפויה ללא הסכמה מהווה הפרה של חוזה העבודה ויכולה להיחשב כפיטורים דה-פקטו (הרעת תנאים מוחשית), המזכה את העובד בזכות להתפטר בדין מפוטר ולקבל פיצויי פיטורים מלאים."
+                            }
+                        ]
+                    }
+                }
+            },
+            shaagat: {
+                title: "מבצע \"שאגת הארי\" 2026",
+                subs: {
+                    general_rules: {
+                        title: "הסדרים מיוחדים ותוקף תקנות",
+                        items: [
+                            {
+                                q: "מהו תוקף ההסדרים המיוחדים שנקבעו תחת מבצע \"שאגת הארי\" 2026?",
+                                a: "המבצע והתקנות המיוחדות שנקבעו מכוחו חלים על פני תקופה מוגדרת החל מיום 28.02.2026 ועד ליום 14.04.2026. ההוראות כוללות הקלות מיוחדות בנושאי תעסוקה, אבטלה, ומיסוי המפורטות בתתי-הסעיפים."
+                            },
+                            {
+                                q: "מהן ההקלות שנקבעו בדמי האבטלה ובנושא תיאום המס בתקופה זו?",
+                                a: "בתקופת המבצע נקבעו מנגנוני אבטלה מקילים המאפשרים הגשת תביעות מהירה ללא תקופת המתנה ממושכת. כמו כן, הוארך אוטומטית תוקפם של אישורי תיאום מס לשכירים ולבני 67 ומעלה, כדי למנוע ניכוי מס מרבי בשל חוסר יכולת להגיע למשרדי השומה בתקופת החירום."
+                            }
+                        ]
+                    }
+                }
+            }
+        };
+
+        let currentTopic = null;
+        let currentSub = null;
+        let isSearchMode = false;
+        let lastQuery = ""; // שמירת מחרוזת החיפוש האחרונה לצורך הדגשה
+
+        // תיקון 6: פונקציית הדגשת טקסט חכמה (Highlight) התומכת בתגיות HTML קיימות
+        function highlightText(text, query) {
+            if (!query) return text;
+            
+            // הגנה מפני שבירת מבנה ה-HTML של הטבלאות בזמן הדגשה
+            const regex = new RegExp(`(?![^<]*>)(${query})`, 'gi');
+            return text.replace(regex, '<mark style="background:#fef08a;padding:2px;border-radius:3px;">$1</mark>');
+        }
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${pageId}`).classList.add('active');
+            
+            const backBtn = document.getElementById('global-back-btn');
+            
+            if (pageId === 'main') {
+                currentTopic = null;
+                currentSub = null;
+                isSearchMode = false;
+                lastQuery = "";
+                backBtn.style.display = 'none';
+                document.getElementById('bc-separator1').style.display = 'none';
+                document.getElementById('bc-parent').style.display = 'none';
+                document.getElementById('bc-separator2').style.display = 'none';
+                document.getElementById('bc-child').style.display = 'none';
+                document.getElementById('main-search').value = '';
+            } else if (pageId === 'sub') {
+                backBtn.style.display = 'inline-flex';
+                document.getElementById('bc-separator1').style.display = 'block';
+                const bcParent = document.getElementById('bc-parent');
+                bcParent.style.display = 'block';
+                bcParent.innerText = db[currentTopic].title;
+                bcParent.classList.remove('active');
+                
+                document.getElementById('bc-separator2').style.display = 'none';
+                document.getElementById('bc-child').style.display = 'none';
+            } else if (pageId === 'content') {
+                backBtn.style.display = 'inline-flex';
+                document.getElementById('bc-separator1').style.display = 'block';
+                const bcParent = document.getElementById('bc-parent');
+                bcParent.style.display = 'block';
+                
+                if (isSearchMode) {
+                    bcParent.innerText = 'תוצאות חיפוש';
+                    bcParent.classList.add('active');
+                    document.getElementById('bc-separator2').style.display = 'none';
+                    document.getElementById('bc-child').style.display = 'none';
+                } else {
+                    bcParent.innerText = db[currentTopic].title;
+                    bcParent.classList.remove('active');
+                    document.getElementById('bc-separator2').style.display = 'block';
+                    const bcChild = document.getElementById('bc-child');
+                    bcChild.style.display = 'block';
+                    bcChild.innerText = db[currentTopic].subs[currentSub].title;
+                }
+            }
+        }
+
+        function handleBackNavigation() {
+            if (isSearchMode) {
+                navigateTo('main');
+            } else if (currentSub) {
+                currentSub = null;
+                openTopic(currentTopic);
+            } else if (currentTopic) {
+                navigateTo('main');
+            }
+        }
+
+        function goBackToSub() {
+            if (!isSearchMode && currentTopic && currentSub) {
+                currentSub = null;
+                openTopic(currentTopic);
+            }
+        }
+
+        function openTopic(topicId) {
+            currentTopic = topicId;
+            isSearchMode = false;
+            lastQuery = "";
+            const subGrid = document.getElementById('sub-grid');
+            subGrid.innerHTML = '';
+            
+            const topicData = db[topicId];
+            
+            Object.keys(topicData.subs).forEach(subKey => {
+                const sub = topicData.subs[subKey];
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <i class="fas fa-folder-open"></i>
+                    <h3>${sub.title}</h3>
+                    <p>לחץ לצפייה במדריך המענה והשאלות הנפוצות בנושא זה.</p>
+                `;
+                card.onclick = () => openSub(subKey);
+                subGrid.appendChild(card);
+            });
+            
+            navigateTo('sub');
+        }
+
+        function openSub(subId) {
+            currentSub = subId;
+            const qaContainer = document.getElementById('qa-container');
+            qaContainer.innerHTML = '';
+            
+            const subData = db[currentTopic].subs[subId];
+            document.getElementById('qa-title').innerText = subData.title;
+            document.getElementById('qa-controls').style.display = 'flex';
+            
+            buildQaItems(subData.items, qaContainer);
+            navigateTo('content');
+        }
+
+        // תיקון 3: מעבר מלא לשימוש ב-Dataset להזרקת המידע ללא חשש מגרשיים ושבירת מחרוזות
+        function buildQaItems(items, container) {
+            items.forEach((item, index) => {
+                const qaItem = document.createElement('div');
+                qaItem.className = 'qa-item';
+                
+                // החלת הדגשה במידה ויש מחרוזת חיפוש אקטיבית
+                const displayQ = highlightText(item.q, lastQuery);
+                const displayA = highlightText(item.a, lastQuery);
+
+                qaItem.innerHTML = `
+                    <div class="qa-question" onclick="toggleAnswer(this)">
+                        <span>${displayQ}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        <div>${displayA}</div>
+                        <div class="action-area">
+                            <button class="copy-btn">
+                                <i class="fas fa-copy"></i> העתק נוסח מענה לעובד
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // הגדרת המידע המקורי בתוך ה-dataset של הכפתור בצורה בטוחה
+                const btn = qaItem.querySelector('.copy-btn');
+                btn.dataset.question = item.q;
+                btn.dataset.answer = item.a;
+                btn.onclick = function() { copyAnswer(this); };
+
+                container.appendChild(qaItem);
+            });
+        }
+
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+                icon.className = 'fas fa-chevron-down';
+            } else {
+                answer.style.display = 'block';
+                icon.className = 'fas fa-chevron-up';
+            }
+        }
+
+        function toggleAllAnswers(open) {
+            document.querySelectorAll('.qa-answer').forEach(ans => {
+                ans.style.display = open ? 'block' : 'none';
+                const q = ans.previousElementSibling;
+                q.querySelector('i').className = open ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+            });
+        }
+
+        // תיקון 3: פונקציית העתקה מעודכנת הקוראת מתוך ה-Dataset ומנקה מבני טבלאות לווטסאפ
+        function copyAnswer(btn) {
+            const qText = btn.dataset.question;
+            const rawAnswer = btn.dataset.answer;
+            
+            let processedAnswer = "";
+            
+            // זיהוי ועיבוד מיוחד לטבלאות במידה וקיימות בתוך מחרוזת המקור
+            if (rawAnswer.includes('class=\'benefits-table\'') || rawAnswer.includes('class="benefits-table"')) {
+                const tempContainer = document.createElement('div');
+                tempContainer.innerHTML = rawAnswer;
+                
+                let leadText = rawAnswer.split('<table')[0];
+                const leadDiv = document.createElement('div');
+                leadDiv.innerHTML = leadText;
+                processedAnswer = leadDiv.innerText.trim() + "\n\n📋 *פירוט חוקיות הקיזוזים:*\n";
+                
+                const rows = tempContainer.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const cols = row.querySelectorAll('td');
+                    if (cols.length >= 3) {
+                        processedAnswer += `▫️ *${cols[0].innerText.trim()}* [${cols[1].innerText.trim()}] - ${cols[2].innerText.trim()}\n`;
+                    }
+                });
+            } else {
+                const tempContainer = document.createElement('div');
+                tempContainer.innerHTML = rawAnswer;
+                processedAnswer = tempContainer.innerText;
+            }
+            
+            const plainText = `*שאלה:* ${qText}\n\n*תשובה:* ${processedAnswer}`;
+            
+            navigator.clipboard.writeText(plainText).then(() => {
+                btn.className = 'copy-btn copied';
+                btn.innerHTML = '<i class="fas fa-check"></i> הועתק בהצלחה!';
+                setTimeout(() => {
+                    btn.className = 'copy-btn';
+                    btn.innerHTML = '<i class="fas fa-copy"></i> העתק נוסח מענה לעובד';
+                }, 2000);
+            }).catch(err => {
+                console.error('שגיאה בתהליך ההעתקה: ', err);
+            });
+        }
+
+        // תיקון 4: שימוש ב-String() למניעת קריסות של טיפוסים שאינם מחרוזות במנגנון החיפוש
+        function executeSearch() {
+            const query = document.getElementById('main-search').value.toLowerCase().trim();
+            const qaContainer = document.getElementById('qa-container');
+            
+            if (query.length < 2) {
+                if (isSearchMode) navigateTo('main');
+                return;
+            }
+            
+            isSearchMode = true;
+            lastQuery = query; // שמירה לעדכון ההדגשות דינמית
+            qaContainer.innerHTML = '';
+            let results = [];
+            
+            Object.keys(db).forEach(topicKey => {
+                const topic = db[topicKey];
+                Object.keys(topic.subs).forEach(subKey => {
+                    const sub = topic.subs[subKey];
+                    sub.items.forEach(item => {
+                        const questionStr = String(item.q).toLowerCase();
+                        const answerStr = String(item.a).toLowerCase();
+                        const subTitleStr = String(sub.title).toLowerCase();
+
+                        if (questionStr.includes(query) || answerStr.includes(query) || subTitleStr.includes(query)) {
+                            results.push(item);
+                        }
+                    });
+                });
+            });
+            
+            document.getElementById('bc-separator1').style.display = 'block';
+            const bcParent = document.getElementById('bc-parent');
+            bcParent.style.display = 'block';
+            bcParent.innerText = `תוצאות חיפוש עבור: "${query}"`;
+            bcParent.classList.add('active');
+            document.getElementById('bc-separator2').style.display = 'none';
+            document.getElementById('bc-child').style.display = 'none';
+            
+            if (results.length === 0) {
+                document.getElementById('qa-title').innerText = `לא נמצאו תוצאות`;
+                qaContainer.innerHTML = `<p style="text-align: center; padding: 20px; color: #718096; font-size: 1.1rem;">לא נמצאו שאלות או תשובות התואמות לביטוי שחיפשת. נסה מילות מפתח אחרות.</p>`;
+                document.getElementById('qa-controls').style.display = 'none';
+            } else {
+                document.getElementById('qa-title').innerText = `נמצאו ${results.length} תוצאות מתאימות:`;
+                document.getElementById('qa-controls').style.display = 'flex';
+                buildQaItems(results, qaContainer);
+                toggleAllAnswers(true);
+            }
+            
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-content').classList.add('active');
+            document.getElementById('global-back-btn').style.display = 'inline-flex';
+        }
+
+        // תיקון 9: חיווי גרסה ותאריך עדכון אוטומטי ודינמי על פי זמן הריצה של הדפדפן
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("version-date").innerHTML = 
+                "גרסת מערכת 2.0 • עודכן אוטומטית: " + new Date().toLocaleDateString('he-IL');
+        });
+    </script>
+</body>
+</html>
+
+
+בתאריך יום ג׳, 9 ביוני 2026, 15:54, מאת Ibrahim Kilani ‏<kilani.ibrahim@gmail.com>:
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת זכויות עובדים בחירום - היחידה ליחסי עבודה - עו"ד אבראהים כילאני</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -13,6 +933,7 @@
             --text-color: #2d3748;
             --card-bg: #ffffff;
             --success-color: #2f855a;
+            --danger-color: #c53030;
         }
 
         body {
@@ -105,7 +1026,7 @@
         .search-input-wrapper i {
             position: absolute;
             right: 15px;
-            top: 50px;
+            top: 50%;
             transform: translateY(-50%);
             color: #a0aec0;
         }
@@ -240,6 +1161,48 @@
             font-size: 0.9rem;
         }
 
+        /* רכיבי טבלה ייעודיים לתגמולים */
+        .benefits-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+
+        .benefits-table th, .benefits-table td {
+            border: 1px solid #cbd5e0;
+            padding: 10px;
+            text-align: right;
+        }
+
+        .benefits-table th {
+            background-color: #edf2f7;
+            color: var(--primary-color);
+        }
+
+        .status-allowed {
+            color: var(--success-color);
+            font-weight: bold;
+            background-color: #f0fff4;
+        }
+
+        .status-forbidden {
+            color: var(--danger-color);
+            font-weight: bold;
+            background-color: #fff5f5;
+        }
+
+        .badge-enforcement {
+            display: inline-block;
+            background-color: #fed7d7;
+            color: #9b2c2c;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
         .action-area {
             display: flex;
             justify-content: flex-end;
@@ -307,8 +1270,8 @@
 
         <div id="search-section" class="search-container">
             <div class="search-input-wrapper">
-                <input type="text" id="main-search" class="search-box" placeholder="חפש שאלה, מילת מפתח או זכות משפטית (לדוגמה: הגנה מפיטורים, חל''ת, 2026)..." oninput="executeSearch()">
-                <i class="fas fa-search" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0;"></i>
+                <input type="text" id="main-search" class="search-box" placeholder="חפש שאלה, מילת מפתח או זכות משפטית (לדוגמה: הגנה מפיטורים, חל''ת, תגמולים, קיזוז)..." oninput="executeSearch()">
+                <i class="fas fa-search"></i>
             </div>
         </div>
 
@@ -317,7 +1280,7 @@
                 <div class="card" onclick="openTopic('miluim')">
                     <i class="fas fa-user-shield"></i>
                     <h3>שירות מילואים ובני זוג</h3>
-                    <p>הגנה מפיטורים (30 ו-60 יום), תגמולים, איסור פגיעה במשרה, וזכויות מיוחדות לבני הזוג.</p>
+                    <p>הגנה מפיטורים (30 ו-60 יום), תגמולי מילואים, איסור פגיעה במשרה, וזכויות מיוחדות לבני הזוג.</p>
                 </div>
                 <div class="card" onclick="openTopic('emergency')">
                     <i class="fas fa-bullhorn"></i>
@@ -356,11 +1319,12 @@
 
         <div class="footer-credit">
              כל הזכויות שמורות לעו"ד אבראהים כילאני - היחידה ליחסי עבודה (2026) • נתקלתם במידע לא מדויק אנא פנו לעו"ד אבראהים כילאני<br>
-             <span style="font-size: 0.85rem; color: #a0aec0; font-weight: normal;">גרסת מערכת: 1.5 • עודכן לאחרונה: יוני 2026 • מיועד לשימוש פנימי בלבד</span>
+             <span style="font-size: 0.85rem; color: #a0aec0; font-weight: normal;">גרסת מערכת: 1.6 • עודכן לאחרונה: יוני 2026 • מיועד לשימוש פנימי בלבד</span>
         </div>
     </div>
 
     <script>
+        // בסיס הנתונים המרכזי המורחב והמלא
         const db = {
             miluim: {
                 title: "שירות מילואים ובני זוג",
@@ -383,7 +1347,7 @@
                         items: [
                             {
                                 q: "מהם התנאים והזכויות להגנה המורחבת בימים 31 עד 60 שלאחר המילואים?",
-                                a: "על פי צווי ההרחבה, עובד שנעדר בשל שירות מילואים במשך 60 ימים מצטברים או יותר במהלך השנה הקלנדרית, ושירת לפחות 7 ימים רצופים, נהנה מהגנה מורחבת בימים 31 עד 60 שלאחר תום השירות בתקופה זו חל איסור לפטרו, להוציאו לחל\"ת או לפגוע בתנאי עבודתו, אלא אם התקבל אישור מראש מוועדת הפיקוח"
+                                a: "על פי צווי ההרחבה, עובד שנעדר בשל שירות מילואים במשך 60 ימים מצטברים או יותר במהלך השנה הקלנדרית, ושירת לפחות 7 ימים רצופים, נהנה מהגנה מורחבת בימים 31 עד 60 שלאחר תום השירות. בתקופה זו חל איסור לפטרו, להוציאו לחל\"ת או לפגוע בתנאי עבודתו, אלא אם התקבל אישור מראש מוועדת הפיקוח."
                             },
                             {
                                 q: "כיצד פועל מנגנון הבקשה וההחלטה של ועדת הפיקוח במשרד העבודה?",
@@ -405,24 +1369,48 @@
                         items: [
                             {
                                 q: "האם מותר לפטר או להוציא לחל\"ת בן/בת זוג של משרת מילואים?",
-                                a: "חוק חיילים משוחררים (תיקון מס' 19 שבתוקף עד 17.7.2026)  קובעים כי אסור לפטר או להוציא לחל\"ת עובד/ת שיש להם ילד משותף מתחת לגיל 14 (או עד גיל 21 עם צרכים מיוחדים) בתקופת שירות המילואים של בן הזוג, אם השירות הוא בצו 8 או נמשך לפחות 21 ימים רצופים, אלא בהיתר מוועדת התעסוקה. הגנת הפיטורים הכללית חלה גם על הורי אומנה ושותפים להורות."
+                                a: "חוק חיילים משוחררים (תיקון מס' 19 שבתוקף עד 17.7.2026) קובעים כי אסור לפטר או להוציא לחל\"ת עובד/ת שיש להם ילד משותף מתחת לגיל 14 (או עד גיל 21 עם צרכים מיוחדים) בתקופת שירות המילואים של בן הזוג, אם השירות הוא בצו 8 או נמשך לפחות 21 ימים רצופים, אלא בהיתר מוועדת התעסוקה. הגנת הפיטורים הכללית חלה גם על הורי אומנה ושותפים להורות."
                             },
                             {
-                                q: "מהם ימי ההיעדרות בתשלום המגיעים לבני זוג לפי הטבלה המעודכנת לשנת 2026?",
-                                a: "בן זוג של משרת מילואים (עם ילד מתחת לגיל 14 או נסיבות רפואיות/מוגבלות של קרוב) זכאי לימי היעדרות בתשלום מלא ע\"ח המעסיק לפי מכסה שנתית מצטברת:<br>• עד 30 ימי מילואים של בן הזוג: 0 ימי היעדרות.<br>• 31 עד 60 ימי מילואים: 2 ימי היעדרות.<br>• 61 עד 90 ימי מילואים: 4 ימי היעדרות.<br>• 91 עד 120 ימי מילואים: 6 ימי היעדרות.<br>• 121 ימי מילואים ומעלה: 8 ימי היעדרות.<br>הימים ניתנים לניצול גם כחלקים משעות.<br><br><strong>נסיבות הניצול המאושרות (בכפוף לאישורים מתאימים):</strong><br>1. מחלת ילד עד גיל 14.<br>2. טיפול או השגחה בלעדית בקרוב שהוא אדם עם מוגבלות.<br>3. מחלת ילד עד גיל 18 החולה במחלה ממארת או מטופל בדיאליזה.<br>4. טיפול בהורה חולה.<br>5. הארכת תקופת הלידה וההורות של בן הזוג.<br>6. השגחה וטיפול בילד.<br>7. היעדרות הנדרשת עקב היציאה לשירות לצורך סידורים הכרחיים לניהול ותחזוקת משק הבית שניתן לבצעם רק בשעות העבודה (תוך התחשבות בצורכי העבודה)."
-                            },
-                            {
-                                q: "האם ימי ההיעדרות ניתנים לצבירה או פדיון וכיצד מחושב רצף מילואים בין שנים קלנדריות?",
-                                a: "הימים ניתנים למימוש **רק בעת שירות מילואים פעיל של בן הזוג** ובאופן חלקי כשעות היעדרות מצטברות. הזכות אינה נצברת מעבר ל-31.12 של אותה שנה ואינה ניתנת לפדיון.<br><br><strong>חריג רצף שנים:</strong> הזכות תישמר ותעבור אם מתקיים רצף בימי מילואים שהחלו בשנה הקודמת ונמשכים ברצף אל השנה הנוכחית. 'ברצף' לעניין זה כולל תקופת שירות מילואים פעיל בהתרעננות, וכן הפסקות של עד 5 ימים בין שירות לשמשנהו. לעניין ימי מילואים מצטברים שבין 31 ל-60 יום, התנאי הוא שימי המילואים שיבואו במניין יהיו 5 ימים רצופים לפחות."
+                                q: "מהם ימי ההיעדרות בתשלום המגיעים לבני זוג לפי המכסות המעודכנות?",
+                                a: "בן זוג של משרת מילואים (עם ילד מתחת לגיל 14 או נסיבות רפואיות/מוגבלות של קרוב) זכאי לימי היעדרות בתשלום מלא ע\"ח המעסיק לפי מכסה שנתית מצטברת:<br>• עד 30 ימי מילואים של בן הזוג: 0 ימי היעדרות.<br>• 31 עד 60 ימי מילואים: 2 ימי היעדרות.<br>• 61 עד 90 ימי מילואים: 4 ימי היעדרות.<br>• 91 עד 120 ימי מילואים: 6 ימי היעדרות.<br>• 121 ימי מילואים ומעלה: 8 ימי היעדרות."
                             }
                         ]
                     },
-                    employer_refunds: {
-                        title: "תגמולים והחזרי מעסיקים (הפרשות סוציאליות)",
+                    miluim_benefits: {
+                        title: "תגמולי מילואים ורכיבי שכר (הנחיות לחשבים)",
                         items: [
                             {
-                                q: "כיצד מקבל המעסיק החזר על השכר וההפרשות הסוציאליות ששילם לעובד במילואים?",
-                                a: "המעסיק משלם לעובד את שכרו הרגיל ומגיש בקשה להחזר חודשי שוטף מול הביטוח הלאומי. בנוסף, מעסיקים ששילמו הפרשות סוציאליות (פנסיה, קופות גמל, קרן השתלמות) בתקופת המילואים, זכאים לפיצוי נוסף מהביטוח הלאומי בגובה 20% משכרו היומי הממוצע של העובד כפול ימי המילואים שביצע."
+                                q: "מהו כלל היסוד לגבי תשלום תגמול המילואים באמצעות המעסיק (סעיף 276 לחוק)?",
+                                [span_2](start_span)a: "מי שנקרא לשירות מילואים זכאי לתגמול מהמוסד לביטוח לאומי[span_2](end_span). [span_3](start_span)המעסיק ישלם שכר לעובד על חשבון התגמול בסכום השכר שהיה משולם לעובד אילולא שירת במילואים והוסיף לעבוד[span_3](end_span). [span_4](start_span)העובד זכאי למלוא התגמול, כולל יתרת התגמול (ההפרש בין מה ששולם על ידי המעסיק לבין מה שהתקבל מביטוח לאומי)[span_4](end_span). [span_5](start_span)מי שלא עומד בתנאי החוק, הביטוח הלאומי ישלם לו את התגמול ישירות[span_5](end_span)."
+                            },
+                            {
+                                q: "מהם התנאים המצטברים שבהם המעסיק מחויב לשלם את התגמול ישירות לעובד?",
+                                [span_6](start_span)[span_7](start_span)a: "חובת התשלום הישיר והטיפול בתביעה מול ביטוח לאומי חלה על המעסיק בהתקיים התנאים הבאים[span_6](end_span)[span_7](end_span):<br>1. [span_8](start_span)העובד מועסק בפועל במקום העבודה[span_8](end_span).<br>2. [span_9](start_span)העובד מקבל משכורת חודשית[span_9](end_span).<br>3. [span_10](start_span)העובד עבד <b>75 ימים לפחות</b> אצל מעסיק אחד או במקום עבודה אחר ברבע השנה שקדם ל-1 לחודש שבו החל שירות המילואים[span_10](end_span)."
+                            },
+                            {
+                                q: "אילו ימי היעדרות מובאים ומחושבים במניין 75 ימי העבודה הנדרשים?",
+                                [span_11](start_span)a: "בכלל 75 ימי העבודה האמורים, יובאו במניין ובחישוב גם ימי ההיעדרות הבאים[span_11](end_span)[span_12](start_span):<br>• יום המנוחה השבועית או חג שאין עובדים בהם, אם על פי חוק ואם על פי הסכם או נוהג[span_12](end_span)[span_13](start_span).<br>• ימי היעדרות מהעבודה בשל חופשה שניתנה לעובד מאת מעבידו, בין בשכר ובין שלא בשכר[span_13](end_span)[span_14](start_span).<br>• ימי היעדרות מהעבודה בשל תאונה או מחלה[span_14](end_span)[span_15](start_span).<br>• ימי אבל במשפחה שמטעמי דת או נוהג לא עבד בהם העובד[span_15](end_span)."
+                            },
+                            {
+                                q: "מה דינו של עובד המועסק אצל שני מעסיקים במקביל?",
+                                [span_16](start_span)a: "שכיר המועסק אצל שני מעסיקים (או שהוא גם שכיר וגם עצמאי) יקבל את תגמול המילואים מהמעסיק העיקרי, ובלבד שהוא עונה על התנאים הכלליים[span_16](end_span). [span_17](start_span)לגבי המעסיק השני, העובד יצטרך להגיש תביעה אישית בנפרד[span_17](end_span). [span_18](start_span)במצב שבו שני המעסיקים הגישו תביעה עבורו בטעות, התביעה הראשונה שתגיע לביטוח הלאומי תטופל והשנייה תידחה[span_18](end_span)."
+                            },
+                            {
+                                q: "מה קורה אם המעסיק שילם לעובד מקדמות אך תביעת התגמול נדחתה בביטוח לאומי?",
+                                [span_19](start_span)a: "מעסיק ששילם שכר על חשבון תגמול המילואים והתביעה לתגמול נדחתה בסופו של דבר על ידי הביטוח הלאומי, יסדיר עם העובד את אופן החזרת הכספים ששולמו[span_19](end_span). [span_20](start_span)החזר הכספים חייב להתבצע אך ורק בכפוף להוראות חוק הגנת השכר בדבר ניכויים מותרים (דורש התחייבות מפורשת בכתב מהעובד, וגובה הניכוי החודשי לא יעלה על רבע משכר העבודה)[span_20](end_span)."
+                            },
+                            {
+                                q: "באילו מקרים מיוחדים התגמול לא משולם דרך המעסיק והעובד מחויב להגיש תביעה אישית?",
+                                [span_21](start_span)a: "על פי סעיף 276 לחוק ותקנות הביטוח הלאומי, התגמול ישולם לעובד ישירות באמצעות הגשת תביעה אישית במקרים הבאים[span_21](end_span)[span_22](start_span):<br>• המעסיק הוא פסול-דין, פושט רגל או שניתן נגדו צו קבלת נכסים[span_22](end_span)[span_23](start_span).<br>• המעסיק נפטר, וכשהמעסיק הוא תאגיד – אם התחילו לגביו הליכי פירוק או אם חדל להתקיים[span_23](end_span)[span_24](start_span).<br>• המפעל או מקום העבודה שבו עבד הזכאי הפסיק לפעול לחלוטין[span_24](end_span)[span_25](start_span).<br>• העובד היה בחופשה ללא תשלום (חל\"ת) יותר מ-60 ימים כאשר יצא למילואים[span_25](end_span)[span_26](start_span).<br>• עובד בשכר (שעתי או יומי) שעבד פחות מ-75 ימים ב-3 החודשים שקדמו לתחילת השירות[span_26](end_span)[span_27](start_span).<br>• העובד מועסק גם כשכיר וגם כעצמאי במקביל[span_27](end_span)[span_28](start_span), או מועסק אצל יותר ממעסיק אחד[span_28](end_span) (לגבי המשרה המשנית)[span_29](start_span).<br>• הגשת תביעה להפרשים למי ששכרו עלה מעל 20% בחודש השירות או בחודשיים שקדמו לו למשך 3 חודשים רצופים[span_29](end_span)."
+                            },
+                            {
+                                q: "מהן החובות הפנסיוניות והפרשות המעסיק לקופות הגמל בזמן מילואים?",
+                                [span_30](start_span)a: "<div class='badge-enforcement'><i class='fas fa-exclamation-triangle'></i> נושא באכיפת משרד העבודה</div><br>עובד הזכאי לתגמול מילואים והוא ומעסיקו נהגו לשלם תשלומים לביטוח פנסיה או לקרן השתלמות, המעסיק <b>חייב להמשיך להפריש את מלוא ההפרשות כולל חלק העובד</b> (סעיף 283)[span_30](end_span). [span_31](start_span)ככל שהעובד מקבל את התגמול ישירות מביטוח לאומי, המעסיק מעביר את חלקו וחלק העובד לקופות באופן שוטף, ובהמשך ינכה את חלק העובד משכרו[span_31](end_span)[span_32](start_span).<br><b>כלל זהב לחשבי שכר:</b> יש להפריש מהשכר הרגיל ולא מסך כל תגמול המילואים (שבדרך כלל גבוה מהשכר)[span_32](end_span)."
+                            },
+                            {
+                                q: "מהם חוקי הקיזוז ומה מותר או אסור לנכות מתוך תגמול המילואים (סעיף 276)?",
+                                [span_33](start_span)[span_34](start_span)a: "דין יתרת התגמול (ההפרש שבין התגמול שהועבר למעביד לבין התשלום השוטף ששולם לעובד) הוא <b>כדין שכר עבודה</b>, והמעביד יעבירו לעובד לכל המאוחר ביום שבו משולם השכר הרגיל באותו חודש[span_33](end_span)[span_34](end_span).<br><br><b>טבלת חוקיות הקיזוז והצגה בתלוש השכר המלאה:</b><br><table class='benefits-table'><thead><tr><th>מהות התשלום</th><th>סטטוס קיזוז</th><th>הסבר והנחיות לחשב השכר</th></tr></thead><tbody><tr><td><b>שכר עבור עבודה בפועל ומילואים</b></td><td class='status-allowed'>מותר (פיצול בתלוש)</td><td>לעובד חודשי יש להפריד בתלוש בין ימי עבודה בפועל לבין ימי מילואים. [span_35](start_span)ערך יום מחושב כחלק ה-21.67 מהמשכורת.</td></tr><tr><td><b>סכום ששילם לעובד עקב עבודתו בפועל</b></td><td class='status-forbidden'>אסור לקזז</td><td>שכר עבור עבודה שבוצעה במהלך שירות המילואים בפועל, כולל החזרי הוצאות נסיעה בשל עבודה בפועל, ישולם במלואו בנוסף לתגמול[span_35](end_span).</td></tr><tr><td><b>שווי רכב (כשהרכב נשאר אצל העובד)</b></td><td class='status-forbidden'>אסור לקזז</td><td>אם בתקופת המילואים הרכב נשאר בשימושו של העובד, המעסיק חייב להכניס בתלוש רכיב 'שווי רכב' החייב במס, שכן זו טובת הנאה. [span_36](start_span)אין מדובר בתשלום בפועל אלא בשווי ההטבה, ולכן אסור לנכות סכום זה מהתגמול הכספי.</td></tr><tr><td><b>שווי רכב (כשהרכב הוחזר למעסיק)</b></td><td class='status-forbidden'>אסור לקזז סכום שלא שולם</td><td>אם הרכב הוחזר למעסיק, המעסיק לא יכניס רכיב שווי רכב (או יכניס יחסי לפי חוזר רשות המיסים), ואינו רשאי לנכות או לקזז מהתגמול סכום כספי בגין החזרת הרכב.</td></tr><tr><td><b>דמי הבראה, חגים ושי לחג</b></td><td class='status-forbidden'>אסור לקזז</td><td>מדובר בתשלומים המשולמים לעובד בין שהוסיף לעבוד ובין שנעדר מעבודתו כדין, ולכן אין למעסיק כל זכות לנכותם או לקזזם מתגמול המילואים[span_36](end_span).</td></tr><tr><td><b>יתרת תגמול שלילית</b></td><td class='status-forbidden'>אסור לקזז</td><td>אם השכר הרגיל של העובד גבוה מסך התגמול שהתקבל מהביטוח הלאומי, חובת המעסיק לשלם את השכר המלא נותרת בעינה, והמעסיק נושא בהפרש ואינו רשאי לקזז זאת מהעובד.</td></tr></tbody></table>"
                             }
                         ]
                     }
@@ -431,52 +1419,21 @@
             emergency: {
                 title: "חוק הגנה בשעת חירום",
                 subs: {
-                    oref_orders: {
-                        title: "איסור פיטורים והנחיות פיקוד העורף",
+                    home_front: {
+                        title: "הנחיות פיקוד העורף ואיסור פיטורים",
                         items: [
                             {
-                                q: "האם מותר לפטר עובד שנעדר מעבודתו עקב הנחיות ביטחוניות?",
-                                a: "חל איסור מוחלט לפטר עובד בשל היעדרותו או אי-ביצוע עבודתו מחמת הוראה שניתנה בשעת התקפה או במצב מיוחד בעורף אשר מנעה ממנו להתייצב. האיסור חל גם אם פיקוד העורף מתנה הגעה בקיום מרחב מוגן תקני ומרחב כזה אינו קיים במקום העבודה."
-                            },
-                            {
-                                q: "האם עובד שנעדר בשל פחד או חרדה מוגן מפיטורים?",
-                                a: "אם מקום העבודה ממוגן ומאושר לפעילות על פי פיקוד העורף, והעובד נעדר רק בשל פחד, הוא אינו מוגן מפיטורים מכוח חוק הגנה בחירום. עם זאת, עובד שנעדר בשל חרדה או מצב נפשי המגובה באישור רפואי זכאי לתשלום דמי מחלה, ובתקופה זו חל איסור לפטרו."
+                                q: "האם מותר לפטר עובד שלא הגיע לעבודה בשל הנחיות פיקוד העורף?",
+                                a: "חוק הגנה על עובדים בשעת חירום אוסר לחלוטין על פיטורי עובד אשר נעדר מעבודתו או לא ביצע אותה בשל הוראה מפורשת של פיקוד העורף (כגון איסור התקהלות, סגירת אזורי תעשייה או היעדר מרחב מוגן תקני במקום העבודה)."
                             }
                         ]
                     },
-                    school_closure: {
-                        title: "סגירת מוסדות חינוך והשגחה על ילדים",
+                    schools: {
+                        title: "היעדרות עקב סגירת מוסדות חינוך",
                         items: [
                             {
-                                q: "מהם התנאים המדויקים המגינים על הורה מפני פיטורים עקב סגירת מוסד חינוך?",
-                                a: "אסור לפטר עובד שנעדר לצורך השגחה על ילדו (עד גיל 14, או עד גיל 21 עם צרכים מיוחדים) עקב סגירת מוסד החינוך בהוראת פיקוד העורף או הרשות המקומית, ובלבד שהתקיים אחד מאלה:<br>1. הילד בהחזקתו הבלעדית או שהעובד הורה עצמאי.<br>2. בן הזוג עובד ולא נעדר לצורך ההשגחה, או שנבצר ממנו להשגיח.<br>ההגנה לא תחול אם קיים במקום העבודה של אחד ההורים סידור הולם להשגחה."
-                            }
-                        ]
-                    },
-                    essential_plants: {
-                        title: "מפעלים חיוניים וחובת התייצבות",
-                        items: [
-                            {
-                                q: "האם עובד במפעל חיוני שקיבל צו קריאה רשאי להיעדר מהעבודה?",
-                                a: "לא. מי שהוצא לו צו קריאה לשירות עבודה במפעל חיוני או מפעל למתן שירותים קיומיים חייב להתייצב לעבודה (פיזית או מרחוק לפי קביעת המעסיק). אי-התייצבות מהווה עבירה פלילית, וחובת ההתייצבות חלה גם על הורה יחיד לילד מתחת לגיל 14. חובת ההתייצבות אינה חלה על נשים בהיריון או פחות משנה לאחר לידה, שוטרים, חיילים ומי שטרם מלאו לו 16 או הגיע לגיל פרישה."
-                            }
-                        ]
-                    },
-                    remote_work: {
-                        title: "עבודה מרחוק (מהבית) בחירום",
-                        items: [
-                            {
-                                q: "האם מעסיק יכול לחייב עובד לעבוד מהבית בתקופת חירום?",
-                                a: "המעסיק רשאי, לפי שיקול דעתו ובתום לב, לאשר עבודה מרחוק. עם זאת, אם מקום העבודה סגור והעובד זכאי להיעדרות מוגנת (למשל לצורך השגחה על ילדים או מחמת הוראות פיקוד העורף), המעסיק אינו יכול לחייב עבודה מהבית שכן החוק מקנה הגנה מלאה מפיטורים גם על אי-ביצוע עבודה."
-                            }
-                        ]
-                    },
-                    unprotected_workers: {
-                        title: "מי לא זכאי להגנה מפיטורים לפי חוק הגנה על עובדים בשעת חירום",
-                        items: [
-                            {
-                                q: "רשימת בעלי תפקידים שחוק הגנה על עובדים בשעת חירום לא חל עליהם",
-                                a: "(1) מי שנקרא לשירות עבודה לפי חוק שירות עבודה בשעת-חירום, התשכ\"ז-1967; (2) שוטר ; (3) סוהר; (4) עובד שירות הביטחון הכללי; (5) עובד המוסד למודיעין ולתפקידים מיוחדים; (6) חבר ארגון עזר כהגדרתו בחוק ההתגוננות האזרחית; (7) עובד בגוף הצלה כהגדרתו בסעיף 90א לפקודת המשטרה."
+                                q: "מהם התנאים המזכים עובד בהגנה מפני פיטורים עקב השגחה על ילדו?",
+                                a: "עובד המחסיר ימי עבודה לצורך השגחה על ילדו (עד גיל 14, או עד גיל 21 אם הוא עם צרכים מיוחדים) עקב סגירת מוסד החינוך בהוראת שעה בחירום, מוגן לחלוטין מפיטורים, ובלבד שבמועד ההיעדרות מקום העבודה או מוסד החינוך נמצאים באזור ההכרזה, ושההורה השני לא נעדר מהעבודה לצורך ההשגחה או שאין אפשרות אחרת להשגחה סבירה."
                             }
                         ]
                     }
@@ -485,30 +1442,21 @@
             leves: {
                 title: "חל\"ת, חופשות ושינויי שכר",
                 subs: {
-                    halat_rules: {
-                        title: "הוצאה לחל\"ת והסכמת העובד",
+                    forced_leave: {
+                        title: "הוצאה כפויה לחופשה שנתית",
                         items: [
                             {
-                                q: "האם מותר למעסיק להוציא עובד לחל\"ת ללא הסכמתו?",
-                                a: "מעסיק רשאי להוציא עובד לחל\"ת אך ורק בהסכמתו המפורשת של העובד. הוצאת עובד לחל\"ת כפוי לזמן ארוך ובלתי מוגבל מהווה הרעה מוחשית בתנאי העבודה ויכולה להיחשב כפיטורים, המזכים את העובד בפיצויי פיטורים מלאים ובחובת עריכת שימוע כדין."
+                                q: "האם מעסיק רשאי לחייב עובד לצאת לחופשה שנתית בחירום?",
+                                a: "המעסיק מנהל את סידור העבודה ורשאי להוציא עובד לחופשה שנתית על חשבון ימי החופשה הצבורים שלו, בתנאי שיש לעובד יתרת ימי חופשה חיובית. אם תקופת החופשה הרצופה היא 7 ימים ומעלה, החוק מחייב הודעה מראש בכתב של שבועיים לפחות. אין להוציא עובד לחופשה כפויה בצבירה שלילית אלא בהסכמתו המפורשת."
                             }
                         ]
                     },
-                    women_protection: {
-                        title: "היתרי משרד העבודה (נשים בהיריון וטיפולי פוריות)",
+                    unpaid_leave: {
+                        title: "הוצאה לחל\"ת (חופשה ללא תשלום)",
                         items: [
                             {
-                                q: "מתי מעסיק חייב לבקש היתר מיוחד ממשרד העבודה כדי להוציא עובד לחל\"ת או להפחית שכר?",
-                                a: "בימי שגרה ובחירום, חובה לקבל היתר מראש מהממונה על עבודת נשים במשרד העבודה עבור קבוצות מוגנות במקרים הבאים:<br>• עובדת בהיריון בעלת ותק של 6 חודשים ומעלה במקום העבודה.<br>• עובדת שחזרה מחופשת לידה או מחל\"ת שאחרי לידה וטרם חלפו 60 ימים מחזרתה.<br>• עובד/ת הנמצאים במהלך טיפולי פוריות (במגבלות הימים הקבועות בחוק).<br>• עובדת שהתגוררה במקלט לנשים נפגעות אלימות וטרם חלפו 150 ימים מחזרתה."
-                            }
-                        ]
-                    },
-                    vacation_forced: {
-                        title: "חופשה כפויה וצבירת ימי חופשה",
-                        items: [
-                            {
-                                q: "האם מותר למעסיק להוציא עובדים לחופשה שנתית כפויה בשל המצב?",
-                                a: "מעסיק רשאי להוציא עובדים לחופשה כפויה על חשבון ימי החופשה הצבורים שלהם, ובלבד שיש להם ימי חופשה ביתרה. המעסיק אינו רשאי להכניס עובד ליתרת חופשה שלילית ללא הסכמתו המפורשת. אם אורך החופשה הרצופה הוא 7 ימים או יותר, על המעסיק להודיע לעובד שבועיים מראש."
+                                q: "האם מותר למעסיק להוציא עובד לחל\"ת באופן חד-צדדי?",
+                                a: "הוצאה לחל\"ת מחייבת את הסכמתו המפורשת של העובד בכתב. הוצאה לחל\"ת כפויה ללא הסכמה מהווה הפרה של חוזה העבודה ויכולה להיחשב כפיטורים דה-פקטו (הרעת תנאים מוחשית), המזכה את העובד בזכות להתפטר בדין מפוטר ולקבל פיצויי פיטורים מלאים."
                             }
                         ]
                     }
@@ -517,33 +1465,16 @@
             shaagat: {
                 title: "מבצע \"שאגת הארי\" 2026",
                 subs: {
-                    shaagat_halat: {
-                        title: "הקלות חל\"ת ודמי אבטלה במבצע",
+                    general_rules: {
+                        title: "הסדרים מיוחדים ותוקף תקנות",
                         items: [
                             {
-                                q: "מהם תנאי הזכאות המקלים לדמי אבטלה שנקבעו במבצע שאגת הארי 2026?",
-                                a: "במהלך מבצע שאגת הארי, נקבע הסדר מקל מיוחד: עובדים שהוצאו לחל\"ת של לפחות 10 ימים בין התאריכים 28.02.2026 ל-14.04.2026 זכאים לדמי אבטלה אם עבדו לפחות 6 חודשים מתוך 18 החודשים האחרונים (במקום 12 חודשים בשגרה). דמי האבטלה ישולמו מהיום הראשון ללא ניכוי ימי חופשה צבורים וללא חובת התייצבות פיזית בלשכות."
+                                q: "מהו תוקף ההסדרים המיוחדים שנקבעו תחת מבצע \"שאגת הארי\" 2026?",
+                                a: "המבצע והתקנות המיוחדות שנקבעו מכוחו חלים על פני תקופה מוגדרת החל מיום 28.02.2026 ועד ליום 14.04.2026. ההוראות כוללות הקלות מיוחדות בנושאי תעסוקה, אבטלה, ומיסוי המפורטות בתתי-הסעיפים."
                             },
                             {
-                                q: "מהו הדין המיוחד למי שהוצא לחל\"ת ביומיים הראשונים של המבצע?",
-                                a: "עובד שהוצא לחל\"ת במהלך היומיים הראשונים של מבצע שאגת הארי (החל מ-28.02.2026) עשוי להיות זכאי לדמי אבטלה גם אם משך החל\"ת שלו היה קצר ועמד על 5 ימים בלבד (במקום מינימום 10 ימים)."
-                            }
-                        ]
-                    },
-                    shaagat_special: {
-                        title: "מענקי גיל 67+, תיאום מס ושעות נוספות",
-                        items: [
-                            {
-                                q: "מה הדין לגבי עובדים בני 67 ומעלה שיצאו לחל\"ת במבצע שאגת הארי?",
-                                a: "עובדים בני 67 ומעלה, אשר אינם זכאים לדמי אבטלה רגילים מפאת גילם, והוצאו לחל\"ת או פוטרו במהלך המבצע (בין 28.02.2026 ל-14.04.2026), עשויים להיות זכאים למענק כספי מיוחד מהביטוח הלאומי."
-                            },
-                            {
-                                q: "עובד לא הספיק לבצע תיאום מס לשנת 2026, האם יחויב במס מוגדל?",
-                                a: "לא. בשל מצב החירום, רשות המסים קבעה כי תיאומי מס שהופקו עבור שנת 2025 יעמדו בתוקף מוארך עד ליום 13.05.2026. בתלושי המשכורת של חודשים ינואר עד אפריל 2026 כולל, המס ינוכה לפי תיאום המס של 2025 ואין צורך לבצע תיאום חדש כדי למנוע חיוב יתר."
-                            },
-                            {
-                                q: "מהן המכסות המותרות להעסקת עובדים בשעות נוספות במהלך המבצע?",
-                                a: "בתקופת המבצע (מ-02.03.2026 עד 14.04.2026) הותר להעסיק עובדים קיימים בשעות נוספות מוגברות תחת תנאים קשיחים: מכסת השעות הנוספות לא תעלה על 25 שעות שבועיות (עד 67 שעות עבודה שבועיות כולל נוספות), ולא יותר מ-90 שעות נוספות בחודש. ניתן להעסיק עד 14 שעות ביום בהסכמת העובד ומתן הפסקה נוספת של רבע שעה לפחות בין השעה ה-12 לשעה ה-14."
+                                q: "מהן ההקלות שנקבעו בדמי האבטלה ובנושא תיאום המס בתקופה זו?",
+                                a: "בתקופת המבצע נקבעו מנגנוני אבטלה מקילים המאפשרים הגשת תביעות מהירה ללא תקופת המתנה ממושכת. כמו כן, הוארך אוטומטית תוקפם של אישורי תיאום מס לשכירים ולבני 67 ומעלה, כדי למנוע ניכוי מס מרבי בשל חוסר יכולת להגיע למשרדי השומה בתקופת החירום."
                             }
                         ]
                     }
@@ -551,199 +1482,220 @@
             }
         };
 
-        let currentTopicId = '';
-        let currentPageId = 'main';
+        // משתני ניווט גלובליים
+        let currentTopic = null;
+        let currentSub = null;
         let isSearchMode = false;
 
+        // מנגנון הניווט המרכזי
         function navigateTo(pageId) {
-            currentPageId = pageId;
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(`page-${pageId}`).classList.add('active');
-           
+            
             const backBtn = document.getElementById('global-back-btn');
-            const searchSection = document.getElementById('search-section');
-
+            
             if (pageId === 'main') {
+                currentTopic = null;
+                currentSub = null;
+                isSearchMode = false;
                 backBtn.style.display = 'none';
-                searchSection.style.display = 'flex';
                 document.getElementById('bc-separator1').style.display = 'none';
                 document.getElementById('bc-parent').style.display = 'none';
                 document.getElementById('bc-separator2').style.display = 'none';
                 document.getElementById('bc-child').style.display = 'none';
-                isSearchMode = false;
-            } else {
+                document.getElementById('main-search').value = '';
+            } else if (pageId === 'sub') {
                 backBtn.style.display = 'inline-flex';
-                searchSection.style.display = 'none'; // הסתרת החיפוש בדפים פנימיים למניעת בלבול
+                document.getElementById('bc-separator1').style.display = 'block';
+                const bcParent = document.getElementById('bc-parent');
+                bcParent.style.display = 'block';
+                bcParent.innerText = db[currentTopic].title;
+                bcParent.classList.remove('active');
+                
+                document.getElementById('bc-separator2').style.display = 'none';
+                document.getElementById('bc-child').style.display = 'none';
+            } else if (pageId === 'content') {
+                backBtn.style.display = 'inline-flex';
+                document.getElementById('bc-separator1').style.display = 'block';
+                const bcParent = document.getElementById('bc-parent');
+                bcParent.style.display = 'block';
+                
+                if (isSearchMode) {
+                    bcParent.innerText = 'תוצאות חיפוש';
+                    bcParent.classList.add('active');
+                    document.getElementById('bc-separator2').style.display = 'none';
+                    document.getElementById('bc-child').style.display = 'none';
+                } else {
+                    bcParent.innerText = db[currentTopic].title;
+                    bcParent.classList.remove('active');
+                    document.getElementById('bc-separator2').style.display = 'block';
+                    const bcChild = document.getElementById('bc-child');
+                    bcChild.style.display = 'block';
+                    bcChild.innerText = db[currentTopic].subs[currentSub].title;
+                }
             }
         }
 
         function handleBackNavigation() {
             if (isSearchMode) {
-                document.getElementById('main-search').value = '';
                 navigateTo('main');
-            } else if (currentPageId === 'content') {
-                goBackToSub();
-            } else if (currentPageId === 'sub') {
+            } else if (currentSub) {
+                currentSub = null;
+                openTopic(currentTopic);
+            } else if (currentTopic) {
                 navigateTo('main');
+            }
+        }
+
+        function goBackToSub() {
+            if (!isSearchMode && currentTopic && currentSub) {
+                currentSub = null;
+                openTopic(currentTopic);
             }
         }
 
         function openTopic(topicId) {
-            currentTopicId = topicId;
-            const topic = db[topicId];
+            currentTopic = topicId;
+            isSearchMode = false;
             const subGrid = document.getElementById('sub-grid');
             subGrid.innerHTML = '';
-
-            document.getElementById('bc-separator1').style.display = 'block';
-            const bcParent = document.getElementById('bc-parent');
-            bcParent.style.display = 'block';
-            bcParent.innerText = topic.title;
-            document.getElementById('bc-separator2').style.display = 'none';
-            document.getElementById('bc-child').style.display = 'none';
-
-            for (const [subId, subData] of Object.entries(topic.subs)) {
+            
+            const topicData = db[topicId];
+            
+            Object.keys(topicData.subs).forEach(subKey => {
+                const sub = topicData.subs[subKey];
                 const card = document.createElement('div');
                 card.className = 'card';
-                card.onclick = () => openSubTopic(subId, subData);
                 card.innerHTML = `
                     <i class="fas fa-folder-open"></i>
-                    <h3>${subData.title}</h3>
-                    <p>לחץ לצפייה בשאלות ותשובות מונחות למוקדן...</p>
+                    <h3>${sub.title}</h3>
+                    <p>לחץ לצפייה במדריך המענה והשאלות הנפוצות בנושא זה.</p>
                 `;
+                card.onclick = () => openSub(subKey);
                 subGrid.appendChild(card);
-            }
-
+            });
+            
             navigateTo('sub');
         }
 
-        function goBackToSub() {
-            if (currentTopicId) openTopic(currentTopicId);
-        }
-
-        function openSubTopic(subId, subData) {
-            document.getElementById('bc-separator2').style.display = 'block';
-            const bcChild = document.getElementById('bc-child');
-            bcChild.style.display = 'block';
-            bcChild.innerText = subData.title;
-
-            document.getElementById('qa-title').innerText = `${subData.title} - מדריך מענה לפונים`;
-            document.getElementById('qa-controls').style.display = 'flex';
-
+        function openSub(subId) {
+            currentSub = subId;
             const qaContainer = document.getElementById('qa-container');
             qaContainer.innerHTML = '';
-
+            
+            const subData = db[currentTopic].subs[subId];
+            document.getElementById('qa-title').innerText = subData.title;
+            document.getElementById('qa-controls').style.display = 'flex';
+            
             buildQaItems(subData.items, qaContainer);
             navigateTo('content');
         }
 
-        // בונה את אלמנטי השאלות והתשובות בקונטיינר
         function buildQaItems(items, container) {
-            items.forEach(item => {
+            items.forEach((item, index) => {
                 const qaItem = document.createElement('div');
                 qaItem.className = 'qa-item';
-               
-                const question = document.createElement('div');
-                question.className = 'qa-question';
-                question.innerHTML = `<span><i class="far fa-question-circle" style="margin-left:8px;color:var(--primary-color);"></i>${item.q}</span> <i class="fas fa-chevron-down"></i>`;
-               
-                const answer = document.createElement('div');
-                answer.className = 'qa-answer';
-                answer.innerHTML = `
-                    <p class="answer-text">${item.a}</p>
-                    <div class="guideline">
-                        <i class="fas fa-gavel" style="color:var(--secondary-color);margin-left:5px;"></i>
-                        <strong>הנחיית המוקדן המשפטית:</strong> נוסח זה אינו מהווה ייעוץ משפטי אלא מידע כללי בלבד.
+                
+                qaItem.innerHTML = `
+                    <div class="qa-question" onclick="toggleAnswer(this)">
+                        <span>${item.q}</span>
+                        <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="action-area">
-                        <button class="copy-btn" onclick="copyAnswer(this)"><i class="far fa-copy"></i> העתק תשובה</button>
+                    <div class="qa-answer">
+                        <div>${item.a}</div>
+                        <div class="action-area">
+                            <button class="copy-btn" onclick="copyAnswer(this, \`${item.q.replace(/'/g, "\\'")}\`, \`${item.a.replace(/'/g, "\\'")}\`)">
+                                <i class="fas fa-copy"></i> העתק נוסח מענה לעובד
+                            </button>
+                        </div>
                     </div>
                 `;
-
-                question.onclick = () => {
-                    const isVisible = answer.style.display === 'block';
-                    answer.style.display = isVisible ? 'none' : 'block';
-                    question.querySelector('.fa-chevron-down, .fa-chevron-up').className = isVisible ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
-                };
-
-                qaItem.appendChild(question);
-                qaItem.appendChild(answer);
                 container.appendChild(qaItem);
             });
         }
 
-        // שליטה מרוכזת בפתיחה וסגירה של שאלות
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+                icon.className = 'fas fa-chevron-down';
+            } else {
+                answer.style.display = 'block';
+                icon.className = 'fas fa-chevron-up';
+            }
+        }
+
         function toggleAllAnswers(open) {
             document.querySelectorAll('.qa-answer').forEach(ans => {
                 ans.style.display = open ? 'block' : 'none';
-            });
-            document.querySelectorAll('.qa-question .fa-chevron-down, .qa-question .fa-chevron-up').forEach(icon => {
-                icon.className = open ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+                const q = ans.previousElementSibling;
+                q.querySelector('i').className = open ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
             });
         }
 
-        // מנגנון העתקה מהירה ללוח
-        function copyAnswer(btn) {
-            const answerContainer = btn.closest('.qa-answer');
-            const textToCopy = answerContainer.querySelector('.answer-text').innerText;
+        function copyAnswer(btn, qText, aText) {
+            // הסרת תגיות HTML מהטקסט המועתק (כמו טבלאות או בולטים) לצורך העתקה נקייה לווטסאפ/מייל
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = `*שאלה:* ${qText}\n\n*תשובה:* ${aText}`;
+            let plainText = tempDiv.innerText || tempDiv.textContent || "";
             
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                btn.classList.add('copied');
-                btn.innerHTML = `<i class="fas fa-check"></i> הועתק!`;
+            navigator.clipboard.writeText(plainText).then(() => {
+                btn.className = 'copy-btn copied';
+                btn.innerHTML = '<i class="fas fa-check"></i> הועתק בהצלחה!';
                 setTimeout(() => {
-                    btn.classList.remove('copied');
-                    btn.innerHTML = `<i class="far fa-copy"></i> העתק תשובה`;
+                    btn.className = 'copy-btn';
+                    btn.innerHTML = '<i class="fas fa-copy"></i> העתק נוסח מענה לעובד';
                 }, 2000);
-            }).catch(err => {
-                console.error('שגיאה בהעתקת הטקסט: ', err);
             });
         }
 
-        // מנגנון החיפוש בזמן אמת
+        // מנגנון החיפוש החכם המרכזי
         function executeSearch() {
-            const query = document.getElementById('main-search').value.trim().toLowerCase();
-            if (!query) {
-                navigateTo('main');
+            const query = document.getElementById('main-search').value.toLowerCase().trim();
+            const qaContainer = document.getElementById('qa-container');
+            
+            if (query.length < 2) {
+                if (isSearchMode) navigateTo('main');
                 return;
             }
-
+            
             isSearchMode = true;
-            const results = [];
-
-            // מעבר על כל בסיס הנתונים ומציאת התאמות
-            for (const [topicId, topicData] of Object.entries(db)) {
-                for (const [subId, subData] of Object.entries(topicData.subs)) {
-                    subData.items.forEach(item => {
-                        if (item.q.toLowerCase().includes(query) || item.a.toLowerCase().includes(query)) {
+            qaContainer.innerHTML = '';
+            let results = [];
+            
+            // סריקה רקורסיבית עמוקה של כל האובייקט (כולל הטבלאות והשאלות החדשות)
+            Object.keys(db).forEach(topicKey => {
+                const topic = db[topicKey];
+                Object.keys(topic.subs).forEach(subKey => {
+                    const sub = topic.subs[subKey];
+                    sub.items.forEach(item => {
+                        if (item.q.toLowerCase().includes(query) || item.a.toLowerCase().includes(query) || sub.title.toLowerCase().includes(query)) {
                             results.push(item);
                         }
                     });
-                }
-            }
-
-            const qaContainer = document.getElementById('qa-container');
-            qaContainer.innerHTML = '';
-            document.getElementById('qa-controls').style.display = 'flex';
+                });
+            });
             
-            // עדכון פירורי הלחם למצב חיפוש
             document.getElementById('bc-separator1').style.display = 'block';
             const bcParent = document.getElementById('bc-parent');
             bcParent.style.display = 'block';
             bcParent.innerText = `תוצאות חיפוש עבור: "${query}"`;
+            bcParent.classList.add('active');
             document.getElementById('bc-separator2').style.display = 'none';
             document.getElementById('bc-child').style.display = 'none';
-
+            
             if (results.length === 0) {
                 document.getElementById('qa-title').innerText = `לא נמצאו תוצאות`;
                 qaContainer.innerHTML = `<p style="text-align: center; padding: 20px; color: #718096; font-size: 1.1rem;">לא נמצאו שאלות או תשובות התואמות לביטוי שחיפשת. נסה מילות מפתח אחרות.</p>`;
                 document.getElementById('qa-controls').style.display = 'none';
             } else {
                 document.getElementById('qa-title').innerText = `נמצאו ${results.length} תוצאות מתאימות:`;
+                document.getElementById('qa-controls').style.display = 'flex';
                 buildQaItems(results, qaContainer);
-                // בחיפוש, נוח שהתשובות פתוחות מראש כדי לעיין בהן מהר
                 toggleAllAnswers(true);
             }
-
-            // הצגת עמוד התוכן עם התוצאות
+            
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('page-content').classList.add('active');
             document.getElementById('global-back-btn').style.display = 'inline-flex';
@@ -751,6 +1703,3 @@
     </script>
 </body>
 </html>
-
-
-
